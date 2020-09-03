@@ -16,7 +16,7 @@
         android:layout_height="318dp"
         android:layout_margin="50dp"
         android:layout_weight="50"
-        app:srcCompat="@drawable/logo"/>
+        app:srcCompat="@drawable/songlogo"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -27,12 +27,12 @@
         android:textSize="20sp"/>
 
     <androidx.appcompat.widget.AppCompatSeekBar
-        android:id="@+id/positionBar"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
+        android:id="@+id/progressBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -41,7 +41,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/elapsedTime"
+            android:id="@+id/elapsedTimeLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="00:07"
@@ -50,7 +50,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/remainingTime"
+            android:id="@+id/remainingTimeLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="-07:00"
@@ -64,37 +64,38 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageButton
-            android:id="@+id/imageButton2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <Button
+            android:id="@+id/nextButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_weight="50"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/playPauseButton"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/ic_media_next" />
+            android:background="@drawable/next" />
 
-        <ImageButton
+        <Button
             android:id="@+id/playPauseButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/ic_media_play" />
+            android:background="@drawable/play" />
 
-        <ImageButton
-            android:id="@+id/imageButton4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <Button
+            android:id="@+id/previousButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/playPauseButton"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/ic_media_previous" />
+            android:background="@drawable/previous"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>
+
