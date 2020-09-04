@@ -83,7 +83,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:background="@drawable/play" />
+            android:background="@drawable/play"
+            android:onClick="playBtnClick"/>
 
         <Button
             android:id="@+id/previousButton"
@@ -96,6 +97,8 @@
             android:background="@drawable/previous"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 </LinearLayout>
 
