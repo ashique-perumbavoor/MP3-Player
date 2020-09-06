@@ -16,7 +16,7 @@
         android:layout_height="100dp"
         android:layout_margin="50dp"
         android:layout_weight="50"
-        app:srcCompat="@drawable/songlogo"
+        app:srcCompat="@drawable/defaultsonglogo"
         android:layout_gravity="center"/>
 
     <TextView
