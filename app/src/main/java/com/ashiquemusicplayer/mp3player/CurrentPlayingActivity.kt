@@ -14,13 +14,11 @@ import kotlinx.android.synthetic.main.activity_current_playing.*
 
 class CurrentPlayingActivity : AppCompatActivity() {
 
-    val TAG = "PlayingActivityHello"
     private lateinit var mp: MediaPlayer
     private var totalTime: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        Log.d(TAG, "onCreate")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_current_playing)
 
@@ -32,25 +30,12 @@ class CurrentPlayingActivity : AppCompatActivity() {
         mp.isLooping = true
         totalTime = mp.duration
 
-        var flag = 0
         progressBar.max = totalTime
         progressBar.setOnSeekBarChangeListener(
             object : SeekBar.OnSeekBarChangeListener {
                 override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                     if (fromUser) {
                         mp.seekTo(progress)
-                    }
-
-                    if (flag == 0) {
-                        if (savedInstanceState != null) {
-                            var remainigTime = savedInstanceState.getInt("currentPlaying")
-                            Log.d("remainigTimetwo", remainigTime.toString())
-                            mp.seekTo(remainigTime)
-                            mp.start()
-                            playPauseButton.setBackgroundResource(R.drawable.pause)
-                            flag = 1
-                        }
-                        flag = 1
                     }
                 }
                 override fun onStartTrackingTouch(p0: SeekBar?) {
@@ -113,46 +98,4 @@ class CurrentPlayingActivity : AppCompatActivity() {
             playPauseButton.setBackgroundResource(R.drawable.pause)
         }
     }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-
-//        var current = mp.currentPosition
-        outState.putInt("currentPlaying", mp.currentPosition)
-
-    }
-
-    override fun onStart() {
-        Log.d(TAG, "onStart")
-        super.onStart()
-    }
-
-    override fun onResume() {
-        Log.d(TAG, "onResume")
-        super.onResume()
-    }
-
-    override fun onPause() {
-        Log.d(TAG,"onPause")
-        super.onPause()
-    }
-
-    override fun onStop() {
-        Log.d(TAG, "onStop")
-        super.onStop()
-    }
-
-    override fun onRestart() {
-        Log.d(TAG, "onRestart")
-        super.onRestart()
-    }
-
-    override fun onDestroy() {
-        Log.d(TAG, "onDestroy")
-        super.onDestroy()
-        if (mp.isPlaying) {
-            mp.pause()
-        }
-    }
-
 }
