@@ -19,6 +19,7 @@
         app:srcCompat="@drawable/defaultsonglogo"/>
 
     <TextView
+        android:id="@+id/song_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="5"

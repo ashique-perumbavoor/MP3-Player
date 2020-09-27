@@ -7,18 +7,21 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Message
 import android.widget.SeekBar
+import androidx.core.net.toUri
 import kotlinx.android.synthetic.main.activity_current_playing.*
 
-@Suppress("DEPRECATION")
+@Suppress("DEPRECATION", "SENSELESS_COMPARISON")
 class CurrentPlayingActivity : AppCompatActivity() {
 
     private lateinit var mp: MediaPlayer
     private var totalTime = 0
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_current_playing)
+        val songUri = intent.getStringExtra("songURI")?.toUri()
 
         // Play and pause song
         playPauseButton.setOnClickListener {
@@ -26,8 +29,10 @@ class CurrentPlayingActivity : AppCompatActivity() {
         }
 
         // Assigning the music for playing
-        mp = MediaPlayer.create(this, R.raw.closer)
+        mp = MediaPlayer.create(this, songUri)
+        mp.start()
         mp.isLooping = true
+        playPauseButton.setBackgroundResource(R.drawable.pause)
 
         // Progressbar creating
         totalTime = mp.duration
@@ -48,10 +53,14 @@ class CurrentPlayingActivity : AppCompatActivity() {
 
         // Threading progressbar for user to change the progressbar and for moving the music to their desired time of the music
         Thread {
-                val msg = Message()
-                msg.what = mp.currentPosition
-                handler.sendMessage(msg)
-                Thread.sleep(1)
+            while (mp != null) {
+                try {
+                    val msg = Message()
+                    msg.what = mp.currentPosition
+                    handler.sendMessage(msg)
+                    Thread.sleep(1)
+                } catch (e: InterruptedException) { }
+            }
         }.start()
     }
 
@@ -91,5 +100,10 @@ class CurrentPlayingActivity : AppCompatActivity() {
             mp.start()
             playPauseButton.setBackgroundResource(R.drawable.pause)
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mp.stop()
     }
 }

@@ -3,6 +3,11 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
     compileSdkVersion 30
     buildToolsVersion "30.0.1"
 

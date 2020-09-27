@@ -1,5 +1,7 @@
 package com.ashiquemusicplayer.mp3player
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Environment
@@ -21,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     // object of DatabaseHandler class
     private val databaseHandler = DatabaseHandler(this)
 
+    @SuppressLint("CommitPrefEdits")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -31,6 +34,16 @@ class MainActivity : AppCompatActivity() {
         getSongs()
         // showing the songs that scanned to the user
         updateList()
+
+        songView.setOnItemClickListener { parent, view, position, id ->
+            Log.d("song info", "$parent    $view    $position    $id")
+            val songURI = databaseHandler.searchSong(position+1)
+            if (songURI != null) {
+                startActivity(Intent(this, CurrentPlayingActivity::class.java).putExtra("songURI", songURI))
+            } else {
+                Toast.makeText(this, "Error in accessing media file", Toast.LENGTH_LONG).show()
+            }
+        }
     }
 
     override fun onStart() {
@@ -59,11 +72,7 @@ class MainActivity : AppCompatActivity() {
 
     // function to scan and store song details in a database
     private fun getSongs(){
-        val fileList: ArrayList<HashMap<String, String>> = ArrayList()
-        val rootFolder = File(
-            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC),
-            ""
-        )
+        val rootFolder = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC), "")
         val files = rootFolder.listFiles()
         if (files == null) {
             Toast.makeText(this, "Couldn't find any song", Toast.LENGTH_LONG).show()
@@ -75,11 +84,7 @@ class MainActivity : AppCompatActivity() {
                     file.name.endsWith(".m4a") ||
                     file.name.endsWith(".AAC") ||
                     file.name.endsWith(".aac")) {
-                    val song: HashMap<String, String> = HashMap()
-                    song["file_path"] = file.absolutePath
-                    song["file_name"] = file.name
-                    fileList.add(song)
-                    databaseHandler.addSong(file.name, file.path)
+                    databaseHandler.addSong(file.name, file.path, file.toURI())
                 }
             }
         }
@@ -89,9 +94,12 @@ class MainActivity : AppCompatActivity() {
     private fun updateList() {
         val sl: List<Model> = databaseHandler.displaySongs()
         val songName = Array(sl.size){"null"}
+        val songPath = Array(sl.size){"null"}
+        val songURI = Array(sl.size){"null"}
         for ((index, i) in sl.withIndex()) {
             songName[index] = i.name
-            Log.d("hello", songName[index])
+            songPath[index] = i.path
+            songURI[index] = i.songURI
         }
         // updating the list shown to the user
         val myListAdapter = MyListAdapter(this, songName)
