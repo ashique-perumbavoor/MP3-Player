@@ -21,6 +21,7 @@ class CurrentPlayingActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_current_playing)
+        // getting the uri of the song
         val songUri = intent.getStringExtra("songURI")?.toUri()
 
         // Play and pause song
@@ -28,7 +29,7 @@ class CurrentPlayingActivity : AppCompatActivity() {
             playBtnClick()
         }
 
-        // Assigning the music for playing
+        // Playing the song
         mp = MediaPlayer.create(this, songUri)
         mp.start()
         mp.isLooping = true
@@ -51,7 +52,7 @@ class CurrentPlayingActivity : AppCompatActivity() {
             }
         )
 
-        // Threading progressbar for user to change the progressbar and for moving the music to their desired time of the music
+        // Threading progressbar for user to change the progressbar and for moving the song to their desired time of the song
         Thread {
             while (mp != null) {
                 try {
@@ -104,6 +105,7 @@ class CurrentPlayingActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        // stopping the song
         mp.stop()
     }
 }

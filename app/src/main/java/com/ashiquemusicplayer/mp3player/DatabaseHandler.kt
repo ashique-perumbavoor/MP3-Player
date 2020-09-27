@@ -68,6 +68,7 @@ class DatabaseHandler(context: Context): SQLiteOpenHelper(context, "MAIN_SONG", 
         return songList
     }
 
+    // searching for the details of the song user requested
     @SuppressLint("CommitPrefEdits")
     fun searchSong(songID: Int): String? {
         var cursor: Cursor? = null

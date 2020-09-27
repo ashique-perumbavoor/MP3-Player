@@ -35,6 +35,7 @@ class MainActivity : AppCompatActivity() {
         // showing the songs that scanned to the user
         updateList()
 
+        // Playing the desired song of the user
         songView.setOnItemClickListener { parent, view, position, id ->
             Log.d("song info", "$parent    $view    $position    $id")
             val songURI = databaseHandler.searchSong(position+1)
