@@ -1,12 +1,16 @@
 package com.ashiquemusicplayer.mp3player
 
 import android.annotation.SuppressLint
+import android.app.Service
+import android.content.Intent
 import android.media.MediaPlayer
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.os.IBinder
 import android.os.Message
+import android.util.Log
 import android.widget.SeekBar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import kotlinx.android.synthetic.main.activity_current_playing.*
 
@@ -21,8 +25,12 @@ class CurrentPlayingActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_current_playing)
-        // getting the uri of the song
-        val songUri = intent.getStringExtra("songURI")?.toUri()
+        // getting the information's of the song
+        val songInfo = intent.getStringArrayExtra("songInfo")
+        // setting song name
+        song_name.text = songInfo?.get(0)
+        // setting song URI
+        val songUri = songInfo?.get(1)
 
         // Play and pause song
         playPauseButton.setOnClickListener {
@@ -30,8 +38,11 @@ class CurrentPlayingActivity : AppCompatActivity() {
         }
 
         // Playing the song
-        mp = MediaPlayer.create(this, songUri)
-        mp.start()
+        mp = MediaPlayer.create(this, songUri?.toUri())
+//        mp.start()
+
+        startService(Intent(this, MusicService::class.java).putExtra("songUri", songUri))
+
         mp.isLooping = true
         playPauseButton.setBackgroundResource(R.drawable.pause)
 
@@ -105,7 +116,6 @@ class CurrentPlayingActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        // stopping the song
-        mp.stop()
+//        mp.stop()
     }
 }

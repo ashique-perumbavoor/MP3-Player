@@ -3,14 +3,11 @@ package com.ashiquemusicplayer.mp3player
 import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
-import android.content.SharedPreferences
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
 import android.database.sqlite.SQLiteOpenHelper
-import android.media.MediaPlayer
 import android.util.Log
-import androidx.core.net.toUri
 import java.net.URI
 
 class DatabaseHandler(context: Context): SQLiteOpenHelper(context, "MAIN_SONG", null, 1) {
@@ -21,7 +18,6 @@ class DatabaseHandler(context: Context): SQLiteOpenHelper(context, "MAIN_SONG", 
         const val SONG_URI = "song"
         const val DATABASE_NAME = "song_Database"
     }
-    private lateinit var sp: SharedPreferences
 
     // creating database
     override fun onCreate(db: SQLiteDatabase?) {
@@ -69,8 +65,8 @@ class DatabaseHandler(context: Context): SQLiteOpenHelper(context, "MAIN_SONG", 
     }
 
     // searching for the details of the song user requested
-    @SuppressLint("CommitPrefEdits")
-    fun searchSong(songID: Int): String? {
+    @SuppressLint("CommitPrefEdits", "Recycle")
+    fun searchSong(songID: Int): Array<String>? {
         var cursor: Cursor? = null
         val selectQuery = "SELECT * FROM $DATABASE_NAME"
         val db = this.readableDatabase
@@ -90,7 +86,7 @@ class DatabaseHandler(context: Context): SQLiteOpenHelper(context, "MAIN_SONG", 
                     songURI = cursor.getString(cursor.getColumnIndex(SONG_URI))
                     if (songIDinDB == songID) {
                         Log.d("Uri", "$songIDinDB    $songURI    $songName")
-                        return songURI
+                        return arrayOf(songName, songURI)
                     }
                 } while (cursor.moveToNext())
             }

@@ -1,12 +1,16 @@
 package com.ashiquemusicplayer.mp3player
 
 import android.annotation.SuppressLint
+import android.app.Service
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.os.IBinder
 import android.util.Log
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -15,10 +19,13 @@ import java.io.File
 
 @Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
+
     // list of permission we need
+    @RequiresApi(Build.VERSION_CODES.P)
     private val permissions = arrayOf(
         android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-        android.Manifest.permission.READ_EXTERNAL_STORAGE
+        android.Manifest.permission.READ_EXTERNAL_STORAGE,
+        android.Manifest.permission.WAKE_LOCK
     )
     // object of DatabaseHandler class
     private val databaseHandler = DatabaseHandler(this)
@@ -38,15 +45,16 @@ class MainActivity : AppCompatActivity() {
         // Playing the desired song of the user
         songView.setOnItemClickListener { parent, view, position, id ->
             Log.d("song info", "$parent    $view    $position    $id")
-            val songURI = databaseHandler.searchSong(position+1)
-            if (songURI != null) {
-                startActivity(Intent(this, CurrentPlayingActivity::class.java).putExtra("songURI", songURI))
+            val songInfo = databaseHandler.searchSong(position+1)
+            if (songInfo != null) {
+                startActivity(Intent(this, CurrentPlayingActivity::class.java).putExtra("songInfo",songInfo))
             } else {
-                Toast.makeText(this, "Error in accessing media file", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Error in accessing the media file", Toast.LENGTH_LONG).show()
             }
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.P)
     override fun onStart() {
         super.onStart()
         // checking for permissions and if permission not granted asking for permission
@@ -63,10 +71,15 @@ class MainActivity : AppCompatActivity() {
         ) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(
             this,
             android.Manifest.permission.WRITE_EXTERNAL_STORAGE
-        ) != PackageManager.PERMISSION_GRANTED
+        ) != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(
+                    this,
+                    android.Manifest.permission.WAKE_LOCK
+                ) != PackageManager.PERMISSION_GRANTED
     }
 
     // requesting for permission
+    @RequiresApi(Build.VERSION_CODES.P)
     private fun requestPermission() {
         ActivityCompat.requestPermissions(this, permissions, 0)
     }
