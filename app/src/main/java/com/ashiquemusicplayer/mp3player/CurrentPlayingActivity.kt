@@ -1,36 +1,40 @@
 package com.ashiquemusicplayer.mp3player
 
 import android.annotation.SuppressLint
-import android.app.Service
-import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
-import android.os.IBinder
 import android.os.Message
 import android.util.Log
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import kotlinx.android.synthetic.main.activity_current_playing.*
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
+
+lateinit var mp: MediaPlayer
 
 @Suppress("DEPRECATION", "SENSELESS_COMPARISON")
 class CurrentPlayingActivity : AppCompatActivity() {
 
-    private lateinit var mp: MediaPlayer
-    private var totalTime = 0
+    private val executorService: ExecutorService = Executors.newSingleThreadExecutor()
+    private val databaseHandler = DatabaseHandler(this)
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_current_playing)
+
         // getting the information's of the song
         val songInfo = intent.getStringArrayExtra("songInfo")
         // setting song name
         song_name.text = songInfo?.get(0)
         // setting song URI
-        val songUri = songInfo?.get(1)
+        var songUri = songInfo?.get(1)
+        // getting song ID in Database
+        var songID = songInfo?.get(2)?.toInt()
 
         // Play and pause song
         playPauseButton.setOnClickListener {
@@ -39,16 +43,34 @@ class CurrentPlayingActivity : AppCompatActivity() {
 
         // Playing the song
         mp = MediaPlayer.create(this, songUri?.toUri())
-//        mp.start()
-
-        startService(Intent(this, MusicService::class.java).putExtra("songUri", songUri))
-
         mp.isLooping = true
         playPauseButton.setBackgroundResource(R.drawable.pause)
+        playSong()
+
+        nextButton.setOnClickListener {
+            mp.pause()
+            val nextSongID: Int = songID!!.toInt() + 2
+            songID++
+            val songInfoDB = databaseHandler.searchSong(nextSongID)
+            songUri = songInfoDB!![1]
+            mp = MediaPlayer.create(this, songUri!!.toUri())
+            song_name.text = songInfoDB[0]
+            mp.start()
+        }
+
+        previousButton.setOnClickListener {
+            mp.pause()
+            val nextSongID: Int = songID!!.toInt() - 1
+            songID--
+            val songInfoDB = databaseHandler.searchSong(nextSongID)
+            songUri = songInfoDB!![1]
+            mp = MediaPlayer.create(this, songUri!!.toUri())
+            song_name.text = songInfoDB[0]
+            mp.start()
+        }
 
         // Progressbar creating
-        totalTime = mp.duration
-        progressBar.max = totalTime
+        progressBar.max = mp.duration
         progressBar.setOnSeekBarChangeListener(
             object : SeekBar.OnSeekBarChangeListener {
                 override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
@@ -85,21 +107,21 @@ class CurrentPlayingActivity : AppCompatActivity() {
             progressBar.progress = currentPosition
             val elapsedTime = createTimeLabel(currentPosition)
             elapsedTimeLabel.text = elapsedTime
-            val remainingTime = createTimeLabel(totalTime - currentPosition)
+            val remainingTime = createTimeLabel(mp.duration - currentPosition)
             remainingTimeLabel.text = "-$remainingTime"
         }
     }
 
     // Making the time label of current position of the song
     fun createTimeLabel(time: Int): String {
-        var timeLabel: String
+        val timeLabel: String
         val min = time / 1000 / 60
         val sec = time / 1000 % 60
-        timeLabel = "$min:"
-        if (sec < 10) {
-            timeLabel += "0"
+        timeLabel = if (sec < 10) {
+            "$min:0$sec"
+        } else {
+            "$min:$sec"
         }
-        timeLabel += sec
         return timeLabel
     }
 
@@ -109,13 +131,14 @@ class CurrentPlayingActivity : AppCompatActivity() {
             mp.pause()
             playPauseButton.setBackgroundResource(R.drawable.play)
         } else {
-            mp.start()
+            playSong()
             playPauseButton.setBackgroundResource(R.drawable.pause)
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-//        mp.stop()
+    private fun playSong() {
+        executorService.execute {
+            mp.start()
+        }
     }
 }

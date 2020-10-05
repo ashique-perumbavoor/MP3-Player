@@ -1,13 +1,11 @@
 package com.ashiquemusicplayer.mp3player
 
 import android.annotation.SuppressLint
-import android.app.Service
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
-import android.os.IBinder
 import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi

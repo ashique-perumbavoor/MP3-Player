@@ -7,7 +7,6 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
 import android.database.sqlite.SQLiteOpenHelper
-import android.util.Log
 import java.net.URI
 
 class DatabaseHandler(context: Context): SQLiteOpenHelper(context, "MAIN_SONG", null, 1) {
@@ -67,6 +66,7 @@ class DatabaseHandler(context: Context): SQLiteOpenHelper(context, "MAIN_SONG", 
     // searching for the details of the song user requested
     @SuppressLint("CommitPrefEdits", "Recycle")
     fun searchSong(songID: Int): Array<String>? {
+        var songPosition = songID
         var cursor: Cursor? = null
         val selectQuery = "SELECT * FROM $DATABASE_NAME"
         val db = this.readableDatabase
@@ -74,6 +74,19 @@ class DatabaseHandler(context: Context): SQLiteOpenHelper(context, "MAIN_SONG", 
             cursor = db.rawQuery(selectQuery, null)
         } catch (e: SQLiteException) {
             db.execSQL(selectQuery)
+        }
+        var numberOfSongs = 0
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                do {
+                    numberOfSongs++
+                } while (cursor.moveToNext())
+            }
+        }
+        if (songPosition > numberOfSongs) {
+            songPosition = 1
+        } else if (songPosition < 1) {
+            songPosition = numberOfSongs
         }
         var songIDinDB: Int
         var songName: String
@@ -84,9 +97,8 @@ class DatabaseHandler(context: Context): SQLiteOpenHelper(context, "MAIN_SONG", 
                     songIDinDB = cursor.getInt(cursor.getColumnIndex(SONG_ID))
                     songName = cursor.getString(cursor.getColumnIndex(SONG_NAME))
                     songURI = cursor.getString(cursor.getColumnIndex(SONG_URI))
-                    if (songIDinDB == songID) {
-                        Log.d("Uri", "$songIDinDB    $songURI    $songName")
-                        return arrayOf(songName, songURI)
+                    if (songIDinDB == songPosition) {
+                        return arrayOf(songName, songURI, songIDinDB.toString())
                     }
                 } while (cursor.moveToNext())
             }
