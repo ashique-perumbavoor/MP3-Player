@@ -5,21 +5,18 @@ import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
-import android.util.Log
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import kotlinx.android.synthetic.main.activity_current_playing.*
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
 
 lateinit var mp: MediaPlayer
 
 @Suppress("DEPRECATION", "SENSELESS_COMPARISON")
 class CurrentPlayingActivity : AppCompatActivity() {
 
-    private val executorService: ExecutorService = Executors.newSingleThreadExecutor()
     private val databaseHandler = DatabaseHandler(this)
+    private val musicObject = MusicObject
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,6 +28,13 @@ class CurrentPlayingActivity : AppCompatActivity() {
         val songInfo = intent.getStringArrayExtra("songInfo")
         // setting song name
         song_name.text = songInfo?.get(0)
+            ?.replace("%20", " ")
+            ?.replace("%5B", " ")
+            ?.replace("%5D", " ")
+            ?.replace("%2C", " ")
+            ?.replace("%26", " ")
+            ?.replace("%5B", " ")
+            ?.replace("%5D", " ")
         // setting song URI
         var songUri = songInfo?.get(1)
         // getting song ID in Database
@@ -45,8 +49,11 @@ class CurrentPlayingActivity : AppCompatActivity() {
         mp = MediaPlayer.create(this, songUri?.toUri())
         mp.isLooping = true
         playPauseButton.setBackgroundResource(R.drawable.pause)
-        playSong()
+        if (songUri != null) {
+            musicObject.playMusic(mp)
+        }
 
+        // Next button to play the next song
         nextButton.setOnClickListener {
             mp.pause()
             val nextSongID: Int = songID!!.toInt() + 2
@@ -55,9 +62,19 @@ class CurrentPlayingActivity : AppCompatActivity() {
             songUri = songInfoDB!![1]
             mp = MediaPlayer.create(this, songUri!!.toUri())
             song_name.text = songInfoDB[0]
-            mp.start()
+                .replace("%20", " ")
+                .replace("%5B", " ")
+                .replace("%5D", " ")
+                .replace("%2C", " ")
+                .replace("%26", " ")
+                .replace("%5B", " ")
+                .replace("%5D", " ")
+            musicObject.stopMusic()
+            musicObject.playMusic(mp)
+            playPauseButton.setBackgroundResource(R.drawable.pause)
         }
 
+        // Previous button to play the previous song
         previousButton.setOnClickListener {
             mp.pause()
             val nextSongID: Int = songID!!.toInt() - 1
@@ -66,7 +83,16 @@ class CurrentPlayingActivity : AppCompatActivity() {
             songUri = songInfoDB!![1]
             mp = MediaPlayer.create(this, songUri!!.toUri())
             song_name.text = songInfoDB[0]
-            mp.start()
+                .replace("%20", " ")
+                .replace("%5B", " ")
+                .replace("%5D", " ")
+                .replace("%2C", " ")
+                .replace("%26", " ")
+                .replace("%5B", " ")
+                .replace("%5D", " ")
+            musicObject.stopMusic()
+            musicObject.playMusic(mp)
+            playPauseButton.setBackgroundResource(R.drawable.pause)
         }
 
         // Progressbar creating
@@ -128,17 +154,11 @@ class CurrentPlayingActivity : AppCompatActivity() {
     // playing and pausing song and changing the button image
     private fun playBtnClick() {
         if (mp.isPlaying) {
-            mp.pause()
+            musicObject.pauseMusic()
             playPauseButton.setBackgroundResource(R.drawable.play)
         } else {
-            playSong()
+            musicObject.playMusicAgain()
             playPauseButton.setBackgroundResource(R.drawable.pause)
-        }
-    }
-
-    private fun playSong() {
-        executorService.execute {
-            mp.start()
         }
     }
 }

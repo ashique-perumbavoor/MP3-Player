@@ -16,7 +16,7 @@ class MyListAdapter(private val context: Activity, private val name: Array<Strin
         val inflater = context.layoutInflater
         val rowView = inflater.inflate(R.layout.songlistingmodel, null, true)
         val nameText = rowView.findViewById<TextView>(R.id.songName)
-        nameText.text = "Name: ${name[position]}"
+        nameText.text = name[position]
         return rowView
     }
 }

@@ -16,8 +16,7 @@
         android:layout_height="318dp"
         android:layout_margin="50dp"
         android:layout_weight="50"
-        app:srcCompat="@drawable/defaultsonglogo"
-        android:contentDescription="@android:string/autofill" />
+        app:srcCompat="@drawable/defaultsonglogo" />
 
     <TextView
         android:id="@+id/song_name"

@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity() {
     )
     // object of DatabaseHandler class
     private val databaseHandler = DatabaseHandler(this)
+    private var flag = 0
 
     @SuppressLint("CommitPrefEdits")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,6 +44,11 @@ class MainActivity : AppCompatActivity() {
         // Playing the desired song of the user
         songView.setOnItemClickListener { parent, view, position, id ->
             Log.d("song info", "$parent    $view    $position    $id")
+            val musicObject = MusicObject
+            if (flag > 0) {
+                musicObject.stopMusic()
+            }
+            flag++
             val songInfo = databaseHandler.searchSong(position+1)
             if (songInfo != null) {
                 startActivity(Intent(this, CurrentPlayingActivity::class.java).putExtra("songInfo",songInfo))
@@ -110,6 +116,13 @@ class MainActivity : AppCompatActivity() {
         val songURI = Array(sl.size){"null"}
         for ((index, i) in sl.withIndex()) {
             songName[index] = i.name
+                .replace("%20", " ")
+                .replace("%5B", " ")
+                .replace("%5D", " ")
+                .replace("%2C", " ")
+                .replace("%26", " ")
+                .replace("%5B", " ")
+                .replace("%5D", " ")
             songPath[index] = i.path
             songURI[index] = i.songURI
         }
