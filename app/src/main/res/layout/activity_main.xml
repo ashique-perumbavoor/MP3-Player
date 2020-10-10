@@ -76,7 +76,7 @@
             app:srcCompat="@drawable/heart1" />
 
         <ImageButton
-            android:id="@+id/imageButton6"
+            android:id="@+id/playListButton"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:background="#00CCFF"

@@ -15,7 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Favourites"></activity>
+        <activity android:name=".Playlist"></activity>
+        <activity android:name=".Favourites" />
         <activity android:name=".RecentActivity" />
         <activity
             android:name=".Info"

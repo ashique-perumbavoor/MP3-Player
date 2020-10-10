@@ -68,6 +68,11 @@ class MainActivity : AppCompatActivity() {
         favourite.setOnClickListener {
             startActivity(Intent(this, Favourites::class.java))
         }
+
+        // Action listener of playlist
+        playListButton.setOnClickListener {
+            startActivity(Intent(this, Playlist::class.java))
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.P)
