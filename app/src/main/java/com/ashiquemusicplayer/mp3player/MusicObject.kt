@@ -8,9 +8,14 @@ object MusicObject {
 
     private lateinit var mediaPlayer: MediaPlayer
     private val executor: ExecutorService = Executors.newSingleThreadExecutor()
+    private var flag = 0
 
     // Function to play music
     fun playMusic(mp: MediaPlayer) {
+        if (flag > 0) {
+            pauseMusic()
+        }
+        flag++
         mediaPlayer = mp
         executor.execute {
             mediaPlayer.start()

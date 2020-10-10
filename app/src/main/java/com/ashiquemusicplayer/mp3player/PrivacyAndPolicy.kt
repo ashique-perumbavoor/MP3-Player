@@ -9,6 +9,7 @@ class PrivacyAndPolicy : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_privacy_and_policy)
 
+        // Loading the url of the privacy and policy of the application
         webView.loadUrl("http://ashiquebava.online/MP3PlayerPrivacyandPolicy.html")
     }
 }

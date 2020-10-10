@@ -125,9 +125,9 @@ class CurrentPlayingActivity : AppCompatActivity() {
             }
         }.start()
 
+        // Menu for actions that can be performed with the music
         menu.setOnClickListener {
             val favouritesDatabase = FavouritesDatabase(this)
-            Log.d("hello", songID.toString())
             val data = databaseHandler.searchSong(songID)
             data?.get(0)?.let { it1 -> favouritesDatabase.addSong(it1, data[1]) }
         }

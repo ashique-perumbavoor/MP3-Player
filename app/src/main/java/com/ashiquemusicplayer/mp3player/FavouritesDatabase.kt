@@ -17,6 +17,7 @@ class FavouritesDatabase(context: Context): SQLiteOpenHelper(context, "favourite
         const val DATABASE_NAME = "favouritesDatabase"
     }
 
+    // Creating the database for favourites
     override fun onCreate(db: SQLiteDatabase?) {
         db?.execSQL("CREATE TABLE $DATABASE_NAME ( $SONG_ID INTEGER PRIMARY KEY, $SONG_NAME TEXT, $SONG_PATH TEXT, $SONG_URI BLOB)")    }
 

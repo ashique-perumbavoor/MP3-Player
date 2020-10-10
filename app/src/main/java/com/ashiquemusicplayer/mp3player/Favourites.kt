@@ -12,25 +12,17 @@ import kotlinx.android.synthetic.main.activity_recent.*
 class Favourites : AppCompatActivity() {
 
     private val recentDatabase = RecentDatabase(this)
-    private var flag = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favourites)
 
-        flag = intent.getStringExtra("flag")?.toInt()!!
+        // Updating the recent database
         updateList()
 
         // Playing the desired song of the user
         favouriteList.setOnItemClickListener { parent, view, position, id ->
             Log.d("song info", "$parent    $view    $position    $id")
-            val musicObject = MusicObject
-            if (flag > 0) {
-                musicObject.stopMusic()
-                val mainActivity = MainActivity()
-                mainActivity.increaseFlag()
-            }
-            flag++
             val songInfo = recentDatabase.searchSong(position+1)
             if (songInfo != null) {
                 startActivity(Intent(this, CurrentPlayingActivity::class.java).putExtra("songInfo",songInfo))

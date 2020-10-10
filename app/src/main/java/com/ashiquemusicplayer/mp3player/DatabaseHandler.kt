@@ -18,7 +18,7 @@ class DatabaseHandler(context: Context): SQLiteOpenHelper(context, "MAIN_SONG", 
         const val DATABASE_NAME = "song_Database"
     }
 
-    // creating database
+    // creating main database
     override fun onCreate(db: SQLiteDatabase?) {
         db?.execSQL("CREATE TABLE $DATABASE_NAME ( $SONG_ID INTEGER PRIMARY KEY, $SONG_NAME TEXT, $SONG_PATH TEXT, $SONG_URI BLOB)")
     }

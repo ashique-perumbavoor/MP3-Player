@@ -20,24 +20,29 @@
       <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/javaCompile/classAnalysis.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/javaCompile/jarAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/javaCompile/jarAnalysis.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/javaCompile/javaCompile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/javaCompile/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ashiquemusicplayer/mp3player/ContactMe.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ashiquemusicplayer/mp3player/ContactMe.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ashiquemusicplayer/mp3player/CurrentPlayingActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ashiquemusicplayer/mp3player/CurrentPlayingActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ashiquemusicplayer/mp3player/DatabaseHandler.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ashiquemusicplayer/mp3player/DatabaseHandler.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ashiquemusicplayer/mp3player/DevelopersInfo.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ashiquemusicplayer/mp3player/DevelopersInfo.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ashiquemusicplayer/mp3player/Favourites.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ashiquemusicplayer/mp3player/Favourites.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ashiquemusicplayer/mp3player/FavouritesDatabase.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ashiquemusicplayer/mp3player/FavouritesDatabase.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ashiquemusicplayer/mp3player/Info.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ashiquemusicplayer/mp3player/Info.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ashiquemusicplayer/mp3player/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ashiquemusicplayer/mp3player/MainActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout-v27/activity_current_playing.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_current_playing.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ashiquemusicplayer/mp3player/Model.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ashiquemusicplayer/mp3player/Model.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ashiquemusicplayer/mp3player/MusicObject.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ashiquemusicplayer/mp3player/MusicObject.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ashiquemusicplayer/mp3player/PrivacyAndPolicy.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ashiquemusicplayer/mp3player/PrivacyAndPolicy.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ashiquemusicplayer/mp3player/RecentActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ashiquemusicplayer/mp3player/RecentActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ashiquemusicplayer/mp3player/RecentDatabase.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ashiquemusicplayer/mp3player/RecentDatabase.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ashiquemusicplayer/mp3player/RecentModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ashiquemusicplayer/mp3player/RecentModel.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="065d9bde0005" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="Pixel_3a_API_27" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -253,26 +258,26 @@
     </state>
     <state x="549" y="154" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1599553497864" />
     <state x="549" y="156" key="FileChooserDialogImpl/0.0.1536.834@0.0.1536.834" timestamp="1602314698043" />
-    <state width="1491" height="210" key="GridCell.Tab.0.bottom" timestamp="1602345414183">
+    <state width="1491" height="210" key="GridCell.Tab.0.bottom" timestamp="1602358308302">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state width="1491" height="201" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1599462431003" />
-    <state width="1491" height="210" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1602345414183" />
-    <state width="1491" height="210" key="GridCell.Tab.0.center" timestamp="1602345414183">
+    <state width="1491" height="210" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1602358308302" />
+    <state width="1491" height="210" key="GridCell.Tab.0.center" timestamp="1602358308301">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state width="1491" height="201" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1599462431003" />
-    <state width="1491" height="210" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1602345414183" />
-    <state width="1491" height="210" key="GridCell.Tab.0.left" timestamp="1602345414183">
+    <state width="1491" height="210" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1602358308301" />
+    <state width="1491" height="210" key="GridCell.Tab.0.left" timestamp="1602358308301">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state width="1491" height="201" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1599462431001" />
-    <state width="1491" height="210" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1602345414183" />
-    <state width="1491" height="210" key="GridCell.Tab.0.right" timestamp="1602345414183">
+    <state width="1491" height="210" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1602358308301" />
+    <state width="1491" height="210" key="GridCell.Tab.0.right" timestamp="1602358308302">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state width="1491" height="201" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1599462431003" />
-    <state width="1491" height="210" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1602345414183" />
+    <state width="1491" height="210" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1602358308302" />
     <state x="468" y="167" key="NewModule_or_Project.wizard" timestamp="1599112683102">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

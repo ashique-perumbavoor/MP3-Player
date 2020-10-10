@@ -9,6 +9,7 @@ class DevelopersInfo : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_developers_info)
 
+        // Loading the url of the information's of the developer
         webView.loadUrl("http://ashiquebava.online/portfolio.html")
     }
 }

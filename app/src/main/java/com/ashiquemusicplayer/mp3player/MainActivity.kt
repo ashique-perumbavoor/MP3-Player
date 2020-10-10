@@ -3,7 +3,6 @@ package com.ashiquemusicplayer.mp3player
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.media.MediaPlayer
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
@@ -29,7 +28,6 @@ class MainActivity : AppCompatActivity() {
     )
     // object of DatabaseHandler class
     private val databaseHandler = DatabaseHandler(this)
-    private var flag = 0
 
     @SuppressLint("CommitPrefEdits")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,12 +44,6 @@ class MainActivity : AppCompatActivity() {
         // Playing the desired song of the user
         songView.setOnItemClickListener { parent, view, position, id ->
             Log.d("song info", "$parent    $view    $position    $id")
-            val musicObject = MusicObject
-            if (flag > 0) {
-                musicObject.stopMusic()
-                Log.d("hello", "success")
-            }
-            flag++
             val songInfo = databaseHandler.searchSong(position+1)
             if (songInfo != null) {
                 startActivity(Intent(this, CurrentPlayingActivity::class.java).putExtra("songInfo",songInfo))
@@ -62,26 +54,19 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        // Action listener for showing the information's of the application
         info_button.setOnClickListener {
             startActivity(Intent(this, Info::class.java))
         }
 
+        // Action listener for showing recent activity
         recent.setOnClickListener {
-            val mp = MediaPlayer.create(this, R.raw.closer)
-            val musicObject = MusicObject
-            musicObject.playMusic(mp)
-            musicObject.pauseMusic()
-            flag++
-            startActivity(Intent(this, RecentActivity::class.java).putExtra("flag", flag.toString()))
+            startActivity(Intent(this, RecentActivity::class.java))
         }
 
+        // Action listener of favourite musics
         favourite.setOnClickListener {
-            val mp = MediaPlayer.create(this, R.raw.closer)
-            val musicObject = MusicObject
-            musicObject.playMusic(mp)
-            musicObject.pauseMusic()
-            flag++
-            startActivity(Intent(this, Favourites::class.java).putExtra("flag", flag.toString()))
+            startActivity(Intent(this, Favourites::class.java))
         }
     }
 
@@ -153,13 +138,9 @@ class MainActivity : AppCompatActivity() {
             songPath[index] = i.path
             songURI[index] = i.songURI
         }
+
         // updating the list shown to the user
         val myListAdapter = MyListAdapter(this, songName)
         songView.adapter = myListAdapter
-    }
-
-    fun increaseFlag() {
-        flag++
-        Log.d("hello", flag.toString())
     }
 }

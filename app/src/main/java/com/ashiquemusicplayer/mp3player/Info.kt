@@ -10,14 +10,17 @@ class Info : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_info)
 
+        // Action listener for showing privacy and policy
         policy.setOnClickListener {
             startActivity(Intent(this, PrivacyAndPolicy::class.java))
         }
 
+        // Action listener for showing developers information
         developerInfo.setOnClickListener {
             startActivity(Intent(this, DevelopersInfo::class.java))
         }
 
+        // Action listener for showing contact form
         contact.setOnClickListener {
             startActivity(Intent(this, ContactMe::class.java))
         }

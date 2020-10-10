@@ -18,6 +18,7 @@ class RecentDatabase (context: Context):SQLiteOpenHelper(context, "recent", null
         const val DATABASE_NAME = "recentDatabase"
     }
 
+    // Creating the database for recently played musics
     override fun onCreate(db: SQLiteDatabase?) {
         db?.execSQL("CREATE TABLE $DATABASE_NAME ( $SONG_ID INTEGER PRIMARY KEY, $SONG_NAME TEXT, $SONG_PATH TEXT, $SONG_URI BLOB)")
     }
