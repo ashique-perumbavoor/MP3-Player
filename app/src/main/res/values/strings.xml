@@ -6,4 +6,5 @@
     <string name="developer_info">Developer Info</string>
     <string name="contact_us">Contact Us</string>
     <string name="recent">Recent</string>
+    <string name="favourites">Favourites</string>
 </resources>

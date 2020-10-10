@@ -74,6 +74,15 @@ class MainActivity : AppCompatActivity() {
             flag++
             startActivity(Intent(this, RecentActivity::class.java).putExtra("flag", flag.toString()))
         }
+
+        favourite.setOnClickListener {
+            val mp = MediaPlayer.create(this, R.raw.closer)
+            val musicObject = MusicObject
+            musicObject.playMusic(mp)
+            musicObject.pauseMusic()
+            flag++
+            startActivity(Intent(this, Favourites::class.java).putExtra("flag", flag.toString()))
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.P)

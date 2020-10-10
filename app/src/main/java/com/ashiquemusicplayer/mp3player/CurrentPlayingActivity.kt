@@ -5,12 +5,14 @@ import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
+import android.util.Log
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import kotlinx.android.synthetic.main.activity_current_playing.*
 
 lateinit var mp: MediaPlayer
+var songID = 0
 
 @Suppress("DEPRECATION", "SENSELESS_COMPARISON")
 class CurrentPlayingActivity : AppCompatActivity() {
@@ -38,7 +40,7 @@ class CurrentPlayingActivity : AppCompatActivity() {
         // setting song URI
         var songUri = songInfo?.get(1)
         // getting song ID in Database
-        var songID = songInfo?.get(2)?.toInt()
+        songID = songInfo?.get(2)?.toInt()!!
 
         // Play and pause song
         playPauseButton.setOnClickListener {
@@ -56,7 +58,7 @@ class CurrentPlayingActivity : AppCompatActivity() {
         // Next button to play the next song
         nextButton.setOnClickListener {
             mp.pause()
-            val nextSongID: Int = songID!!.toInt() + 2
+            val nextSongID: Int = songID + 2
             songID++
             val songInfoDB = databaseHandler.searchSong(nextSongID)
             songUri = songInfoDB!![1]
@@ -77,7 +79,7 @@ class CurrentPlayingActivity : AppCompatActivity() {
         // Previous button to play the previous song
         previousButton.setOnClickListener {
             mp.pause()
-            val nextSongID: Int = songID!!.toInt() - 1
+            val nextSongID: Int = songID - 1
             songID--
             val songInfoDB = databaseHandler.searchSong(nextSongID)
             songUri = songInfoDB!![1]
@@ -122,6 +124,13 @@ class CurrentPlayingActivity : AppCompatActivity() {
                 } catch (e: InterruptedException) { }
             }
         }.start()
+
+        menu.setOnClickListener {
+            val favouritesDatabase = FavouritesDatabase(this)
+            Log.d("hello", songID.toString())
+            val data = databaseHandler.searchSong(songID)
+            data?.get(0)?.let { it1 -> favouritesDatabase.addSong(it1, data[1]) }
+        }
     }
 
     // changing current position of progressbar, elapsed and remaining time

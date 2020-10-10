@@ -8,6 +8,22 @@
     tools:context=".MainActivity"
     android:orientation="vertical"
     android:weightSum="100">
+    
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/menu"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
+            android:background="#fff"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/menuvertical" />
+        
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     <ImageView
@@ -16,8 +32,7 @@
         android:layout_height="318dp"
         android:layout_margin="50dp"
         android:layout_weight="50"
-        app:srcCompat="@drawable/defaultsonglogo"
-        android:contentDescription="@android:string/autofill" />
+        app:srcCompat="@drawable/defaultsonglogo" />
 
     <TextView
         android:id="@+id/song_name"
@@ -98,8 +113,5 @@
             android:background="@drawable/previous"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
 </LinearLayout>
 

@@ -65,7 +65,7 @@
 
 
         <ImageButton
-            android:id="@+id/imageButton4"
+            android:id="@+id/favourite"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:background="#00CCFF"
@@ -82,7 +82,7 @@
             android:background="#00CCFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageButton4"
+            app:layout_constraintStart_toEndOf="@+id/favourite"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/playlist3" />
 
@@ -92,7 +92,7 @@
             android:layout_height="30dp"
             android:background="#00CCFF"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/imageButton4"
+            app:layout_constraintEnd_toStartOf="@+id/favourite"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/recent4" />
