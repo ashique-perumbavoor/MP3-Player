@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">MP3 Player</string>
     <string name="song_mp3">song.mp3</string>
+    <string name="privacy_and_policy">Privacy and Policy</string>
+    <string name="version">Version 1.00.16</string>
+    <string name="developer_info">Developer Info</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="recent">Recent</string>
 </resources>

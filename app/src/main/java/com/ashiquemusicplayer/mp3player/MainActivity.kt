@@ -3,6 +3,7 @@ package com.ashiquemusicplayer.mp3player
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.media.MediaPlayer
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
@@ -12,6 +13,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 
@@ -47,14 +49,30 @@ class MainActivity : AppCompatActivity() {
             val musicObject = MusicObject
             if (flag > 0) {
                 musicObject.stopMusic()
+                Log.d("hello", "success")
             }
             flag++
             val songInfo = databaseHandler.searchSong(position+1)
             if (songInfo != null) {
                 startActivity(Intent(this, CurrentPlayingActivity::class.java).putExtra("songInfo",songInfo))
+                val recentDatabase = RecentDatabase(this)
+                recentDatabase.addSong(songInfo[0], songInfo[1].toUri())
             } else {
                 Toast.makeText(this, "Error in accessing the media file", Toast.LENGTH_LONG).show()
             }
+        }
+
+        info_button.setOnClickListener {
+            startActivity(Intent(this, Info::class.java))
+        }
+
+        recent.setOnClickListener {
+            val mp = MediaPlayer.create(this, R.raw.closer)
+            val musicObject = MusicObject
+            musicObject.playMusic(mp)
+            musicObject.pauseMusic()
+            flag++
+            startActivity(Intent(this, RecentActivity::class.java).putExtra("flag", flag.toString()))
         }
     }
 
@@ -129,5 +147,10 @@ class MainActivity : AppCompatActivity() {
         // updating the list shown to the user
         val myListAdapter = MyListAdapter(this, songName)
         songView.adapter = myListAdapter
+    }
+
+    fun increaseFlag() {
+        flag++
+        Log.d("hello", flag.toString())
     }
 }

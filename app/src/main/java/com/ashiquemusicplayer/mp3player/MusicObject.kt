@@ -19,7 +19,9 @@ object MusicObject {
 
     // Function to play currently playing music again
     fun playMusicAgain() {
-        mp.start()
+        executor.execute {
+            mp.start()
+        }
     }
 
     // Function to pause music

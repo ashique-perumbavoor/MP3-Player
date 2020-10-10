@@ -9,7 +9,7 @@
     android:orientation="vertical">
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/info_button"
         android:layout_marginTop="15dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
@@ -36,7 +36,7 @@
         android:layout_height="50dp"
         android:layout_marginTop="5dp"
         app:layout_constraintEnd_toStartOf="@+id/imageButton2"
-        app:layout_constraintStart_toEndOf="@+id/imageButton"
+        app:layout_constraintStart_toEndOf="@+id/info_button"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <LinearLayout
@@ -63,17 +63,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <ImageButton
-            android:id="@+id/imageButton3"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="#00CCFF"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/headphone1" />
-
 
         <ImageButton
             android:id="@+id/imageButton4"
@@ -81,41 +70,30 @@
             android:layout_height="30dp"
             android:background="#00CCFF"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/imageButton3"
-            app:layout_constraintStart_toEndOf="@+id/imageButton5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/heart1" />
 
         <ImageButton
-            android:id="@+id/imageButton5"
+            android:id="@+id/imageButton6"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginStart="20dp"
-            android:background="#00CCFF"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/queue2" />
-
-        <ImageButton
-            android:id="@+id/imageButton6"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginEnd="20dp"
             android:background="#00CCFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageButton4"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/playlist3" />
 
         <ImageButton
-            android:id="@+id/imageButton7"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:id="@+id/recent"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:background="#00CCFF"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/imageButton6"
-            app:layout_constraintStart_toEndOf="@+id/imageButton3"
+            app:layout_constraintEnd_toStartOf="@+id/imageButton4"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/recent4" />
     </androidx.constraintlayout.widget.ConstraintLayout>
