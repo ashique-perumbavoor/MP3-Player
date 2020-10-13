@@ -6,9 +6,13 @@
     <string name="developer_info">Developer Info</string>
     <string name="contact_us">Contact Us</string>
     <string name="recent">Recent</string>
-    <string name="favourites">Favourites</string>
-    <string name="playlist">Playlist</string>
     <string name="enter_playlist_name">Enter playlist name</string>
     <string name="enter_name_for_the_playlist">Enter name for the playlist</string>
     <string name="playlist_name">Playlist Name:</string>
+    <string name="add_to_favourites">Add to favourites</string>
+    <string name="playlist">Playlist</string>
+    <string name="favourites">Favourites</string>
+    <string name="playlists">Playlists</string>
+    <string name="choose_the_playlist">Choose the playlist:</string>
+    <string name="textview">TextView</string>
 </resources>

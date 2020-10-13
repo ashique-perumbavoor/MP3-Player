@@ -1,18 +1,23 @@
 package com.ashiquemusicplayer.mp3player
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
 import android.util.Log
+import android.view.MenuItem
+import android.widget.PopupMenu
 import android.widget.SeekBar
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import kotlinx.android.synthetic.main.activity_current_playing.*
 
 lateinit var mp: MediaPlayer
 var songID = 0
+private var songUri = ""
 
 @Suppress("DEPRECATION", "SENSELESS_COMPARISON")
 class CurrentPlayingActivity : AppCompatActivity() {
@@ -37,10 +42,8 @@ class CurrentPlayingActivity : AppCompatActivity() {
             ?.replace("%26", " ")
             ?.replace("%5B", " ")
             ?.replace("%5D", " ")
-        // setting song URI
-        var songUri = songInfo?.get(1)
-        // getting song ID in Database
-        songID = songInfo?.get(2)?.toInt()!!
+        // setting song Uri
+        songUri = songInfo?.get(1).toString()
 
         // Play and pause song
         playPauseButton.setOnClickListener {
@@ -48,7 +51,8 @@ class CurrentPlayingActivity : AppCompatActivity() {
         }
 
         // Playing the song
-        mp = MediaPlayer.create(this, songUri?.toUri())
+        Log.d("hello", songUri)
+        mp = MediaPlayer.create(this, songUri.toUri())
         mp.isLooping = true
         playPauseButton.setBackgroundResource(R.drawable.pause)
         if (songUri != null) {
@@ -62,7 +66,7 @@ class CurrentPlayingActivity : AppCompatActivity() {
             songID++
             val songInfoDB = databaseHandler.searchSong(nextSongID)
             songUri = songInfoDB!![1]
-            mp = MediaPlayer.create(this, songUri!!.toUri())
+            mp = MediaPlayer.create(this, songUri.toUri())
             song_name.text = songInfoDB[0]
                 .replace("%20", " ")
                 .replace("%5B", " ")
@@ -83,7 +87,7 @@ class CurrentPlayingActivity : AppCompatActivity() {
             songID--
             val songInfoDB = databaseHandler.searchSong(nextSongID)
             songUri = songInfoDB!![1]
-            mp = MediaPlayer.create(this, songUri!!.toUri())
+            mp = MediaPlayer.create(this, songUri.toUri())
             song_name.text = songInfoDB[0]
                 .replace("%20", " ")
                 .replace("%5B", " ")
@@ -127,9 +131,16 @@ class CurrentPlayingActivity : AppCompatActivity() {
 
         // Menu for actions that can be performed with the music
         menu.setOnClickListener {
-            val favouritesDatabase = FavouritesDatabase(this)
-            val data = databaseHandler.searchSong(songID)
-            data?.get(0)?.let { it1 -> favouritesDatabase.addSong(it1, data[1]) }
+            val popupMenu = PopupMenu(this, menu)
+            popupMenu.menuInflater.inflate(R.menu.current_playing_popup, popupMenu.menu)
+            popupMenu.setOnMenuItemClickListener { item ->
+                when (item!!.itemId) {
+                    R.id.addToPlaylist -> toPlaylist()
+                    R.id.addToFavourites -> toFavourites()
+                }
+                true
+            }
+            popupMenu.show()
         }
     }
 
@@ -169,5 +180,17 @@ class CurrentPlayingActivity : AppCompatActivity() {
             musicObject.playMusicAgain()
             playPauseButton.setBackgroundResource(R.drawable.pause)
         }
+    }
+
+    private fun toFavourites() {
+        val favouritesDatabase = FavouritesDatabase(this)
+        val data = databaseHandler.searchSong(songID)
+        data?.get(0)?.let { it1 -> favouritesDatabase.addSong(it1, data[1]) }
+        Toast.makeText(this, "Added to favourites", Toast.LENGTH_LONG).show()
+    }
+
+    private fun toPlaylist() {
+        val songInfo = arrayOf(song_name.text.toString(), songUri)
+        startActivity(Intent(this, ChoosePlaylist::class.java).putExtra("songInfo", songInfo))
     }
 }

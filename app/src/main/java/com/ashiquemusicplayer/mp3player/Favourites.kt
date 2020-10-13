@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.activity_recent.*
 
 class Favourites : AppCompatActivity() {
 
-    private val recentDatabase = RecentDatabase(this)
+    private val favouritesDatabase = FavouritesDatabase(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +23,7 @@ class Favourites : AppCompatActivity() {
         // Playing the desired song of the user
         favouriteList.setOnItemClickListener { parent, view, position, id ->
             Log.d("song info", "$parent    $view    $position    $id")
-            val songInfo = recentDatabase.searchSong(position+1)
+            val songInfo = favouritesDatabase.searchSong(position+1)
             if (songInfo != null) {
                 startActivity(Intent(this, CurrentPlayingActivity::class.java).putExtra("songInfo",songInfo))
                 val recentDatabase = RecentDatabase(this)
@@ -36,7 +36,7 @@ class Favourites : AppCompatActivity() {
 
     // function to show the scanned songs to the user
     private fun updateList() {
-        val sl: List<RecentModel> = recentDatabase.displaySongs()
+        val sl: List<RecentModel> = favouritesDatabase.displaySongs()
         val songName = Array(sl.size){"null"}
         for ((index, i) in sl.withIndex()) {
             songName[index] = i.name

@@ -1,5 +1,6 @@
 package com.ashiquemusicplayer.mp3player
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -17,6 +18,10 @@ class Playlist : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_playlist)
 
+        // Updating list of playlist
+        updateList()
+
+        // Actions for adding playlist
         add.setOnClickListener {
             val inflater = layoutInflater
             val playlistAdder = R.layout.add_playlist_view
@@ -40,9 +45,14 @@ class Playlist : AppCompatActivity() {
             alertDialog.create().show()
         }
 
-        updateList()
+        playlistList.setOnItemClickListener { parent, view, position, id ->
+            Log.d("Playlist info", "$parent  $view  $position  $id")
+            val playlistInfo = playlistDatabase.searchPlaylistByID(position + 1)
+            startActivity(Intent(this, PlaylistSongViewer::class.java).putExtra("playlistName", playlistInfo?.get(0).toString()))
+        }
     }
 
+    // Function to update playlist list
     private fun updateList() {
         val sl: ArrayList<RecentModel> = playlistDatabase.displayPlaylist()
         val playlistName = Array(sl.size){"null"}

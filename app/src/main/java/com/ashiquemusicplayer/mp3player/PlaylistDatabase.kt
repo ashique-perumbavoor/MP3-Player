@@ -57,7 +57,6 @@ class PlaylistDatabase(context: Context): SQLiteOpenHelper(context, "playlist", 
     // searching for the details of the song user requested
     @SuppressLint("CommitPrefEdits", "Recycle")
     fun searchPlaylist(name: String): Array<String>? {
-        val playlistName = name
         var cursor: Cursor? = null
         val selectQuery = "SELECT * FROM $DATABASE_NAME"
         val db = this.readableDatabase
@@ -81,8 +80,35 @@ class PlaylistDatabase(context: Context): SQLiteOpenHelper(context, "playlist", 
                 do {
                     songIDinDB = cursor.getInt(cursor.getColumnIndex(SONG_ID))
                     songName = cursor.getString(cursor.getColumnIndex(PLAYLIST_NAME))
-                    if (songName == playlistName) {
+                    if (songName == name) {
                         return arrayOf(songName, songIDinDB.toString())
+                    }
+                } while (cursor.moveToNext())
+            }
+        }
+        return null
+    }
+
+    // searching for the details of the song user requested
+    @SuppressLint("CommitPrefEdits", "Recycle")
+    fun searchPlaylistByID(ID: Int): Array<String>? {
+        var cursor: Cursor? = null
+        val selectQuery = "SELECT * FROM $DATABASE_NAME"
+        val db = this.readableDatabase
+        try {
+            cursor = db.rawQuery(selectQuery, null)
+        } catch (e: SQLiteException) {
+            db.execSQL(selectQuery)
+        }
+        var playlistIDinDB: Int
+        var playlistName: String
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                do {
+                    playlistIDinDB = cursor.getInt(cursor.getColumnIndex(SONG_ID))
+                    playlistName = cursor.getString(cursor.getColumnIndex(PLAYLIST_NAME))
+                    if (playlistIDinDB == ID) {
+                        return arrayOf(playlistName, playlistIDinDB.toString())
                     }
                 } while (cursor.moveToNext())
             }

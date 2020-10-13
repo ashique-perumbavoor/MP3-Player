@@ -20,7 +20,7 @@ class DatabaseHandler(context: Context): SQLiteOpenHelper(context, "MAIN_SONG", 
 
     // creating main database
     override fun onCreate(db: SQLiteDatabase?) {
-        db?.execSQL("CREATE TABLE $DATABASE_NAME ( $SONG_ID INTEGER PRIMARY KEY, $SONG_NAME TEXT, $SONG_PATH TEXT, $SONG_URI BLOB)")
+        db?.execSQL("CREATE TABLE $DATABASE_NAME ( $SONG_ID INTEGER PRIMARY KEY,$SONG_NAME TEXT, $SONG_PATH TEXT, $SONG_URI BLOB)")
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {

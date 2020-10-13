@@ -31,16 +31,16 @@ class RecentDatabase (context: Context):SQLiteOpenHelper(context, "recent", null
     fun addSong(name: String, absoluteFile: Uri) {
         val db =this.writableDatabase
         val contentValues = ContentValues()
-        contentValues.put(DatabaseHandler.SONG_NAME, name)
-        contentValues.put(DatabaseHandler.SONG_URI, absoluteFile.toString())
-        db.insert(DatabaseHandler.DATABASE_NAME, null, contentValues)
+        contentValues.put(SONG_NAME, name)
+        contentValues.put(SONG_URI, absoluteFile.toString())
+        db.insert(DATABASE_NAME, null, contentValues)
     }
 
     // adding song details from database to array for showing to the user
     @SuppressLint("Recycle")
     fun displaySongs(): ArrayList<RecentModel> {
         val songList:ArrayList<RecentModel> = ArrayList()
-        val selectQuery = "SELECT * FROM ${DatabaseHandler.DATABASE_NAME}"
+        val selectQuery = "SELECT * FROM $DATABASE_NAME"
         val db = this.readableDatabase
         val cursor: Cursor
         try{
@@ -51,7 +51,7 @@ class RecentDatabase (context: Context):SQLiteOpenHelper(context, "recent", null
         }
         if (cursor.moveToFirst()) {
             do {
-                val songName = cursor.getString(cursor.getColumnIndex(DatabaseHandler.SONG_NAME))
+                val songName = cursor.getString(cursor.getColumnIndex(SONG_NAME))
                 val sl= RecentModel(name = songName)
                 songList.add(sl)
             } while (cursor.moveToNext())
@@ -64,7 +64,7 @@ class RecentDatabase (context: Context):SQLiteOpenHelper(context, "recent", null
     fun searchSong(songID: Int): Array<String>? {
         var songPosition = songID
         var cursor: Cursor? = null
-        val selectQuery = "SELECT * FROM ${DatabaseHandler.DATABASE_NAME}"
+        val selectQuery = "SELECT * FROM $DATABASE_NAME"
         val db = this.readableDatabase
         try {
             cursor = db.rawQuery(selectQuery, null)
@@ -90,9 +90,9 @@ class RecentDatabase (context: Context):SQLiteOpenHelper(context, "recent", null
         if (cursor != null) {
             if (cursor.moveToFirst()) {
                 do {
-                    songIDinDB = cursor.getInt(cursor.getColumnIndex(DatabaseHandler.SONG_ID))
-                    songName = cursor.getString(cursor.getColumnIndex(DatabaseHandler.SONG_NAME))
-                    songURI = cursor.getString(cursor.getColumnIndex(DatabaseHandler.SONG_URI))
+                    songIDinDB = cursor.getInt(cursor.getColumnIndex(SONG_ID))
+                    songName = cursor.getString(cursor.getColumnIndex(SONG_NAME))
+                    songURI = cursor.getString(cursor.getColumnIndex(SONG_URI))
                     if (songIDinDB == songPosition) {
                         return arrayOf(songName, songURI, songIDinDB.toString())
                     }
