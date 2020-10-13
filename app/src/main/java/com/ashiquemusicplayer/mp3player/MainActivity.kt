@@ -24,7 +24,8 @@ class MainActivity : AppCompatActivity() {
     private val permissions = arrayOf(
         android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
         android.Manifest.permission.READ_EXTERNAL_STORAGE,
-        android.Manifest.permission.WAKE_LOCK
+        android.Manifest.permission.WAKE_LOCK,
+        android.Manifest.permission.WRITE_SETTINGS
     )
     // object of DatabaseHandler class
     private val databaseHandler = DatabaseHandler(this)

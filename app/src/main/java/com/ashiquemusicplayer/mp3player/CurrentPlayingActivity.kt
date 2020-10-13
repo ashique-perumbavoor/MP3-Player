@@ -3,11 +3,11 @@ package com.ashiquemusicplayer.mp3player
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.media.MediaPlayer
+import android.media.RingtoneManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
 import android.util.Log
-import android.view.MenuItem
 import android.widget.PopupMenu
 import android.widget.SeekBar
 import android.widget.Toast
@@ -44,6 +44,8 @@ class CurrentPlayingActivity : AppCompatActivity() {
             ?.replace("%5D", " ")
         // setting song Uri
         songUri = songInfo?.get(1).toString()
+        // getting song ID in Database
+        songID = songInfo?.get(2)?.toInt()!!
 
         // Play and pause song
         playPauseButton.setOnClickListener {
@@ -62,7 +64,7 @@ class CurrentPlayingActivity : AppCompatActivity() {
         // Next button to play the next song
         nextButton.setOnClickListener {
             mp.pause()
-            val nextSongID: Int = songID + 2
+            val nextSongID: Int = songID + 1
             songID++
             val songInfoDB = databaseHandler.searchSong(nextSongID)
             songUri = songInfoDB!![1]
@@ -137,6 +139,7 @@ class CurrentPlayingActivity : AppCompatActivity() {
                 when (item!!.itemId) {
                     R.id.addToPlaylist -> toPlaylist()
                     R.id.addToFavourites -> toFavourites()
+                    R.id.setAsRingtone -> setAsRingtone()
                 }
                 true
             }
@@ -190,7 +193,11 @@ class CurrentPlayingActivity : AppCompatActivity() {
     }
 
     private fun toPlaylist() {
-        val songInfo = arrayOf(song_name.text.toString(), songUri)
+        val songInfo = arrayOf(song_name.text.toString(), songUri, songID.toString())
         startActivity(Intent(this, ChoosePlaylist::class.java).putExtra("songInfo", songInfo))
+    }
+
+    private fun setAsRingtone() {
+        RingtoneManager.setActualDefaultRingtoneUri(this, RingtoneManager.TYPE_RINGTONE, songUri.toUri())
     }
 }

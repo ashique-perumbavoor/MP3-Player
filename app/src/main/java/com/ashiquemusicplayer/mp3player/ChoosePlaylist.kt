@@ -27,7 +27,7 @@ class ChoosePlaylist : AppCompatActivity() {
             if (playlistInfo != null) {
                 val playlistSongDatabase = PlaylistSongDatabase(this)
                 songInfo?.get(0)?.let {
-                    playlistSongDatabase.addSong(playlistInfo[0], it, songInfo[1] )
+                    playlistSongDatabase.addSong(playlistInfo[0], it, songInfo[1], songInfo[2])
                 }
                 Toast.makeText(this, "Song added to the playlist", Toast.LENGTH_LONG).show()
             }

@@ -15,4 +15,6 @@
     <string name="playlists">Playlists</string>
     <string name="choose_the_playlist">Choose the playlist:</string>
     <string name="textview">TextView</string>
+    <string name="add_to_playlist">Add to Playlist</string>
+    <string name="set_as_ringtone">Set as Ringtone</string>
 </resources>

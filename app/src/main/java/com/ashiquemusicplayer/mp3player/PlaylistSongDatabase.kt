@@ -7,7 +7,6 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
 import android.database.sqlite.SQLiteOpenHelper
-import android.util.Log
 
 class PlaylistSongDatabase(context: Context): SQLiteOpenHelper(context, "Playlist Songs", null, 1) {
     companion object {
@@ -19,19 +18,20 @@ class PlaylistSongDatabase(context: Context): SQLiteOpenHelper(context, "Playlis
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
-        db?.execSQL("CREATE TABLE $DATABASE_NAME ($SONG_NAME TEXT, $SONG_URI BLOB,$PLAYLIST_NAME TEXT)")
+        db?.execSQL("CREATE TABLE $DATABASE_NAME ($SONG_NAME TEXT, $SONG_URI BLOB,$PLAYLIST_NAME TEXT, $SONG_ID TEXT)")
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         TODO("Not yet implemented")
     }
 
-    fun addSong(listName: String, songName: String, songUri: String) {
+    fun addSong(listName: String, songName: String, songUri: String, songID: String) {
         val db = this.writableDatabase
         val contentValues = ContentValues()
         contentValues.put(SONG_NAME, songName)
         contentValues.put(SONG_URI, songUri)
         contentValues.put(PLAYLIST_NAME, listName)
+        contentValues.put(SONG_ID, songID)
         db.insert(DATABASE_NAME, null, contentValues)
     }
 
@@ -46,7 +46,7 @@ class PlaylistSongDatabase(context: Context): SQLiteOpenHelper(context, "Playlis
         } catch (e: SQLiteException) {
             db.execSQL(selectQuery)
         }
-        var songIDinDB: Int
+        var songIDinDB: String
         var songName: String
         var songUri: String
         var playlistName: String
@@ -54,13 +54,13 @@ class PlaylistSongDatabase(context: Context): SQLiteOpenHelper(context, "Playlis
         if (cursor != null) {
             if (cursor.moveToFirst()) {
                 do {
-                    songIDinDB = cursor.getInt(cursor.getColumnIndex(SONG_ID))
                     songName = cursor.getString(cursor.getColumnIndex(SONG_NAME))
                     songUri = cursor.getString(cursor.getColumnIndex(SONG_URI))
                     playlistName = cursor.getString(cursor.getColumnIndex(PLAYLIST_NAME))
+                    songIDinDB = cursor.getString(cursor.getColumnIndex(SONG_ID))
                     if (playlistName == name) {
                         if (count == id) {
-                            return arrayOf(songName, songUri, songIDinDB.toString())
+                            return arrayOf(songName, songUri, songIDinDB)
                         }
                         count++
                     }
