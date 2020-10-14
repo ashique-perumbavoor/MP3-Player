@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/imageButton2"
+        android:id="@+id/shuffle"
         android:layout_marginTop="15dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
@@ -35,7 +35,7 @@
         android:layout_width="310dp"
         android:layout_height="50dp"
         android:layout_marginTop="5dp"
-        app:layout_constraintEnd_toStartOf="@+id/imageButton2"
+        app:layout_constraintEnd_toStartOf="@+id/shuffle"
         app:layout_constraintStart_toEndOf="@+id/info_button"
         app:layout_constraintTop_toTopOf="parent"/>
 
@@ -51,7 +51,8 @@
         <ListView
             android:id="@+id/songView"
             android:layout_width="wrap_content"
-            android:layout_height="600dp" />
+            android:layout_height="600dp" >
+        </ListView>
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -98,6 +99,19 @@
             app:srcCompat="@drawable/recent4" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/currentPlaying"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="5dp"
+        android:backgroundTint="#ffffff"
+        app:borderWidth="0dp"
+        app:srcCompat="@drawable/defaultsonglogo" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-

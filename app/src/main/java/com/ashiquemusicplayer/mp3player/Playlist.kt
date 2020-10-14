@@ -7,12 +7,10 @@ import android.util.Log
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_playlist.*
-import kotlinx.android.synthetic.main.add_playlist_view.*
 
 class Playlist : AppCompatActivity() {
-    lateinit var  playlistName: String
+    private lateinit var  playlistName: String
     private val playlistDatabase = PlaylistDatabase(this)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

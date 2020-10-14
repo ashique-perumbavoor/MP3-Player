@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
 import android.database.sqlite.SQLiteOpenHelper
 import java.net.URI
+import kotlin.collections.ArrayList
 
 class DatabaseHandler(context: Context): SQLiteOpenHelper(context, "MAIN_SONG", null, 1) {
     companion object {
@@ -15,7 +16,7 @@ class DatabaseHandler(context: Context): SQLiteOpenHelper(context, "MAIN_SONG", 
         const val SONG_NAME = "songName"
         const val SONG_PATH = "songPath"
         const val SONG_URI = "song"
-        const val DATABASE_NAME = "song_Database"
+        const val DATABASE_NAME = "songDatabase"
     }
 
     // creating main database

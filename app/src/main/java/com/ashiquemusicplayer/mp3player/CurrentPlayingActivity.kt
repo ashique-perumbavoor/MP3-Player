@@ -4,13 +4,15 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.media.MediaPlayer
 import android.media.RingtoneManager
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
-import android.util.Log
+import android.provider.Settings
 import android.widget.PopupMenu
 import android.widget.SeekBar
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import kotlinx.android.synthetic.main.activity_current_playing.*
@@ -25,6 +27,7 @@ class CurrentPlayingActivity : AppCompatActivity() {
     private val databaseHandler = DatabaseHandler(this)
     private val musicObject = MusicObject
 
+    @RequiresApi(Build.VERSION_CODES.M)
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -53,7 +56,6 @@ class CurrentPlayingActivity : AppCompatActivity() {
         }
 
         // Playing the song
-        Log.d("hello", songUri)
         mp = MediaPlayer.create(this, songUri.toUri())
         mp.isLooping = true
         playPauseButton.setBackgroundResource(R.drawable.pause)
@@ -80,6 +82,8 @@ class CurrentPlayingActivity : AppCompatActivity() {
             musicObject.stopMusic()
             musicObject.playMusic(mp)
             playPauseButton.setBackgroundResource(R.drawable.pause)
+            val recentDatabase = RecentDatabase(this)
+            recentDatabase.addSong(songInfo[0], songInfo[1].toUri())
         }
 
         // Previous button to play the previous song
@@ -101,19 +105,27 @@ class CurrentPlayingActivity : AppCompatActivity() {
             musicObject.stopMusic()
             musicObject.playMusic(mp)
             playPauseButton.setBackgroundResource(R.drawable.pause)
+            val recentDatabase = RecentDatabase(this)
+            recentDatabase.addSong(songInfo[0], songInfo[1].toUri())
         }
 
         // Progressbar creating
         progressBar.max = mp.duration
         progressBar.setOnSeekBarChangeListener(
             object : SeekBar.OnSeekBarChangeListener {
-                override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                override fun onProgressChanged(
+                    seekBar: SeekBar?,
+                    progress: Int,
+                    fromUser: Boolean
+                ) {
                     if (fromUser) {
                         mp.seekTo(progress)
                     }
                 }
+
                 override fun onStartTrackingTouch(p0: SeekBar?) {
                 }
+
                 override fun onStopTrackingTouch(p0: SeekBar?) {
                 }
             }
@@ -197,7 +209,15 @@ class CurrentPlayingActivity : AppCompatActivity() {
         startActivity(Intent(this, ChoosePlaylist::class.java).putExtra("songInfo", songInfo))
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     private fun setAsRingtone() {
-        RingtoneManager.setActualDefaultRingtoneUri(this, RingtoneManager.TYPE_RINGTONE, songUri.toUri())
+        val settingsCanWrite: Boolean = Settings.System.canWrite(applicationContext)
+        if (!settingsCanWrite) {
+            Toast.makeText(this, "Give permission in order to set the music as ringtone", Toast.LENGTH_LONG).show()
+            startActivity(Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS))
+        } else {
+            RingtoneManager.setActualDefaultRingtoneUri(this, RingtoneManager.TYPE_RINGTONE, songUri.toUri())
+            Toast.makeText(this, "Ringtone changed.", Toast.LENGTH_LONG).show()
+        }
     }
 }

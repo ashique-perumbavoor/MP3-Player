@@ -7,7 +7,6 @@ import android.util.Log
 import android.widget.Toast
 import androidx.core.net.toUri
 import kotlinx.android.synthetic.main.activity_favourites.*
-import kotlinx.android.synthetic.main.activity_recent.*
 
 class Favourites : AppCompatActivity() {
 

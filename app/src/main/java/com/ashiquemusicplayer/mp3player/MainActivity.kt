@@ -74,6 +74,11 @@ class MainActivity : AppCompatActivity() {
         playListButton.setOnClickListener {
             startActivity(Intent(this, Playlist::class.java))
         }
+
+        // Button listener to go to current playing activity
+        currentPlaying.setOnClickListener {
+            startActivity(Intent(this, CurrentPlayingActivity::class.java))
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.P)
