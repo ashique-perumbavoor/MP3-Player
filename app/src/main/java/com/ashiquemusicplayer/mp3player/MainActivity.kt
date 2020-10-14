@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
     )
     // object of DatabaseHandler class
     private val databaseHandler = DatabaseHandler(this)
+    private var flag = 0
 
     @SuppressLint("CommitPrefEdits")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,9 +46,15 @@ class MainActivity : AppCompatActivity() {
         // Playing the desired song of the user
         songView.setOnItemClickListener { parent, view, position, id ->
             Log.d("song info", "$parent    $view    $position    $id")
-            val songInfo = databaseHandler.searchSong(position+1)
+            flag++
+            val songInfo = databaseHandler.searchSong(position + 1)
             if (songInfo != null) {
-                startActivity(Intent(this, CurrentPlayingActivity::class.java).putExtra("songInfo",songInfo))
+                startActivity(
+                    Intent(this, CurrentPlayingActivity::class.java).putExtra(
+                        "songInfo",
+                        songInfo
+                    )
+                )
                 val recentDatabase = RecentDatabase(this)
                 recentDatabase.addSong(songInfo[0], songInfo[1].toUri())
             } else {
@@ -77,7 +84,11 @@ class MainActivity : AppCompatActivity() {
 
         // Button listener to go to current playing activity
         currentPlaying.setOnClickListener {
-            startActivity(Intent(this, CurrentPlayingActivity::class.java))
+            if (flag > 0) {
+                startActivity(Intent(this, MusicPlayingActivity::class.java))
+            } else {
+                Toast.makeText(this, "Play any music to use this feature", Toast.LENGTH_LONG).show()
+            }
         }
     }
 
@@ -113,7 +124,10 @@ class MainActivity : AppCompatActivity() {
 
     // function to scan and store song details in a database
     private fun getSongs(){
-        val rootFolder = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC), "")
+        val rootFolder = File(
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC),
+            ""
+        )
         val files = rootFolder.listFiles()
         if (files == null) {
             Toast.makeText(this, "Couldn't find any song", Toast.LENGTH_LONG).show()
