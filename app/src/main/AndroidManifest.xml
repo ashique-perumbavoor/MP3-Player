@@ -13,13 +13,14 @@
         tools:ignore="ProtectedPermissions" />
 
     <application
+        android:name=".NotificationChannel"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MusicPlayingActivity"></activity>
+        <activity android:name=".MusicPlayingActivity" />
         <activity android:name=".PlaylistSongViewer" />
         <activity android:name=".ChoosePlaylist" />
         <activity android:name=".Playlist" />
@@ -49,6 +50,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service android:name=".NotificationService" />
     </application>
 
 </manifest>

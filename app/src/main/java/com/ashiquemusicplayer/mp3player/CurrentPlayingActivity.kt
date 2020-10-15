@@ -61,6 +61,9 @@ class CurrentPlayingActivity : AppCompatActivity() {
         playPauseButton.setBackgroundResource(R.drawable.pause)
         musicObject.playMusic(mp, songName, songID, songUri.toUri())
 
+        // Starting Notification
+        startService(Intent(this, NotificationService::class.java).putExtra("songName", songName))
+
         // Next button to play the next song
         nextButton.setOnClickListener {
             mp.pause()
@@ -69,6 +72,7 @@ class CurrentPlayingActivity : AppCompatActivity() {
             val songInfoDB = databaseHandler.searchSong(nextSongID)
             songUri = songInfoDB!![1]
             mp = MediaPlayer.create(this, songUri.toUri())
+            songName = songInfoDB[0]
             song_name.text = songInfoDB[0]
                 .replace("%20", " ")
                 .replace("%5B", " ")
@@ -79,6 +83,7 @@ class CurrentPlayingActivity : AppCompatActivity() {
                 .replace("%5D", " ")
             musicObject.stopMusic()
             musicObject.playMusic(mp, songName, songID, songUri.toUri())
+            startService(Intent(this, NotificationService::class.java).putExtra("songName", songName))
             playPauseButton.setBackgroundResource(R.drawable.pause)
             val recentDatabase = RecentDatabase(this)
             recentDatabase.addSong(songInfo[0], songInfo[1].toUri())
@@ -92,6 +97,7 @@ class CurrentPlayingActivity : AppCompatActivity() {
             val songInfoDB = databaseHandler.searchSong(nextSongID)
             songUri = songInfoDB!![1]
             mp = MediaPlayer.create(this, songUri.toUri())
+            songName = songInfoDB[0]
             song_name.text = songInfoDB[0]
                 .replace("%20", " ")
                 .replace("%5B", " ")
@@ -102,6 +108,7 @@ class CurrentPlayingActivity : AppCompatActivity() {
                 .replace("%5D", " ")
             musicObject.stopMusic()
             musicObject.playMusic(mp, songName, songID, songUri.toUri())
+            startService(Intent(this, NotificationService::class.java).putExtra("songName", songName))
             playPauseButton.setBackgroundResource(R.drawable.pause)
             val recentDatabase = RecentDatabase(this)
             recentDatabase.addSong(songInfo[0], songInfo[1].toUri())
@@ -188,9 +195,11 @@ class CurrentPlayingActivity : AppCompatActivity() {
     private fun playBtnClick() {
         if (mp.isPlaying) {
             musicObject.pauseMusic()
+            stopService(Intent(this, NotificationService::class.java))
             playPauseButton.setBackgroundResource(R.drawable.play)
         } else {
             musicObject.playMusicAgain()
+            startService(Intent(this, NotificationService::class.java).putExtra("songName", songName))
             playPauseButton.setBackgroundResource(R.drawable.pause)
         }
     }

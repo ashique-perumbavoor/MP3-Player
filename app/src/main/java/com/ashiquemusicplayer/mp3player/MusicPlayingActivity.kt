@@ -30,6 +30,7 @@ class MusicPlayingActivity : AppCompatActivity() {
     private var songID = 0
     private lateinit var mp: MediaPlayer
     private val databaseHandler = DatabaseHandler(this)
+    private lateinit var songName: String
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,8 +49,12 @@ class MusicPlayingActivity : AppCompatActivity() {
             .replace("%26", " ")
             .replace("%5B", " ")
             .replace("%5D", " ")
-        playPauseButton.setBackgroundResource(R.drawable.pause)
         mp = MusicObject.getMediaPlayer()
+        if (mp.isPlaying) {
+            playPauseButton.setBackgroundResource(R.drawable.pause)
+        } else {
+            playPauseButton.setBackgroundResource(R.drawable.play)
+        }
         songID = songInfo[2] as Int
         songUri = songInfo[1] as Uri
 
@@ -66,6 +71,7 @@ class MusicPlayingActivity : AppCompatActivity() {
             val songInfoDB = databaseHandler.searchSong(nextSongID)
             songUri = songInfoDB!![1].toUri()
             mp = MediaPlayer.create(this, songUri)
+            songName = songInfoDB[0]
             song_name.text = songInfoDB[0]
                 .replace("%20", " ")
                 .replace("%5B", " ")
@@ -76,6 +82,7 @@ class MusicPlayingActivity : AppCompatActivity() {
                 .replace("%5D", " ")
             MusicObject.stopMusic()
             MusicObject.playMusic(mp, songInfoDB[0], songID, songUri)
+            startService(Intent(this, NotificationService::class.java).putExtra("songName", songName))
             playPauseButton.setBackgroundResource(R.drawable.pause)
             val recentDatabase = RecentDatabase(this)
             recentDatabase.addSong(songInfoDB[0], songUri)
@@ -89,6 +96,7 @@ class MusicPlayingActivity : AppCompatActivity() {
             val songInfoDB = databaseHandler.searchSong(nextSongID)
             songUri = songInfoDB!![1].toUri()
             mp = MediaPlayer.create(this, songUri)
+            songName = songInfoDB[0]
             song_name.text = songInfoDB[0]
                 .replace("%20", " ")
                 .replace("%5B", " ")
@@ -99,6 +107,7 @@ class MusicPlayingActivity : AppCompatActivity() {
                 .replace("%5D", " ")
             MusicObject.stopMusic()
             MusicObject.playMusic(mp, songInfoDB[0], songID, songUri)
+            startService(Intent(this, NotificationService::class.java).putExtra("songName", songName))
             playPauseButton.setBackgroundResource(R.drawable.pause)
             val recentDatabase = RecentDatabase(this)
             recentDatabase.addSong(songInfoDB[0], songUri)
@@ -185,9 +194,11 @@ class MusicPlayingActivity : AppCompatActivity() {
     private fun playBtnClick() {
         if (mp.isPlaying) {
             MusicObject.pauseMusic()
+            stopService(Intent(this, NotificationService::class.java))
             playPauseButton.setBackgroundResource(R.drawable.play)
         } else {
             MusicObject.playMusicAgain()
+            startService(Intent(this, NotificationService::class.java).putExtra("songName", songName))
             playPauseButton.setBackgroundResource(R.drawable.pause)
         }
     }
