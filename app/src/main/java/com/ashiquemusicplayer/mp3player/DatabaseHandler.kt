@@ -7,6 +7,7 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
 import android.database.sqlite.SQLiteOpenHelper
+import android.net.Uri
 import java.net.URI
 import kotlin.collections.ArrayList
 
@@ -29,7 +30,7 @@ class DatabaseHandler(context: Context): SQLiteOpenHelper(context, "MAIN_SONG", 
     }
 
     // adding the song details to the database
-    fun addSong(name: String, path: String, absoluteFile: URI) {
+    fun addSong(name: String, path: String, absoluteFile: Uri) {
         val db =this.writableDatabase
         val contentValues = ContentValues()
         contentValues.put(SONG_NAME, name)

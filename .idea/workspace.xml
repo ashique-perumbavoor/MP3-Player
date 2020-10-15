@@ -21,10 +21,10 @@
       <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/javaCompile/jarAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/javaCompile/jarAnalysis.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/javaCompile/javaCompile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/app/app.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ashiquemusicplayer/mp3player/CurrentPlayingActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ashiquemusicplayer/mp3player/CurrentPlayingActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ashiquemusicplayer/mp3player/MusicPlayingActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ashiquemusicplayer/mp3player/MusicPlayingActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ashiquemusicplayer/mp3player/DatabaseHandler.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ashiquemusicplayer/mp3player/DatabaseHandler.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ashiquemusicplayer/mp3player/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ashiquemusicplayer/mp3player/MainActivity.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,7 +79,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/main/res/drawable" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/src/main/res/drawable" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Dependencies" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -216,11 +216,11 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="131" y="215" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1536.824@0.0.1536.824" timestamp="1599238484460" />
-    <state x="598" y="109" key="#com.intellij.ide.util.MemberChooser" timestamp="1602691707267">
+    <state x="598" y="109" key="#com.intellij.ide.util.MemberChooser" timestamp="1602767753874">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="598" y="108" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1599541746076" />
-    <state x="598" y="109" key="#com.intellij.ide.util.MemberChooser/0.0.1536.834@0.0.1536.834" timestamp="1602691707267" />
+    <state x="598" y="109" key="#com.intellij.ide.util.MemberChooser/0.0.1536.834@0.0.1536.834" timestamp="1602767753874" />
     <state x="73" y="140" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1600153376460">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
@@ -247,31 +247,31 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="423" y="12" key="CommitChangelistDialog2/0.0.1536.834@0.0.1536.834" timestamp="1601020522156" />
-    <state x="549" y="156" key="FileChooserDialogImpl" timestamp="1602314698043">
+    <state x="549" y="156" key="FileChooserDialogImpl" timestamp="1602758824220">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="549" y="154" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1599553497864" />
-    <state x="549" y="156" key="FileChooserDialogImpl/0.0.1536.834@0.0.1536.834" timestamp="1602314698043" />
-    <state width="1491" height="209" key="GridCell.Tab.0.bottom" timestamp="1602745456081">
+    <state x="549" y="156" key="FileChooserDialogImpl/0.0.1536.834@0.0.1536.834" timestamp="1602758824220" />
+    <state width="1491" height="209" key="GridCell.Tab.0.bottom" timestamp="1602769282101">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state width="1491" height="201" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1599462431003" />
-    <state width="1491" height="209" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1602745456081" />
-    <state width="1491" height="209" key="GridCell.Tab.0.center" timestamp="1602745456080">
+    <state width="1491" height="209" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1602769282101" />
+    <state width="1491" height="209" key="GridCell.Tab.0.center" timestamp="1602769282101">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state width="1491" height="201" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1599462431003" />
-    <state width="1491" height="209" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1602745456080" />
-    <state width="1491" height="209" key="GridCell.Tab.0.left" timestamp="1602745456080">
+    <state width="1491" height="209" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1602769282101" />
+    <state width="1491" height="209" key="GridCell.Tab.0.left" timestamp="1602769282101">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state width="1491" height="201" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1599462431001" />
-    <state width="1491" height="209" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1602745456080" />
-    <state width="1491" height="209" key="GridCell.Tab.0.right" timestamp="1602745456081">
+    <state width="1491" height="209" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1602769282101" />
+    <state width="1491" height="209" key="GridCell.Tab.0.right" timestamp="1602769282101">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state width="1491" height="201" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1599462431003" />
-    <state width="1491" height="209" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1602745456081" />
+    <state width="1491" height="209" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1602769282101" />
     <state x="468" y="167" key="NewModule_or_Project.wizard" timestamp="1599112683102">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -314,11 +314,11 @@
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="425" y="189" key="run.anything.popup/0.0.1536.834@0.0.1536.834" timestamp="1602692853363" />
-    <state x="431" y="147" width="672" height="687" key="search.everywhere.popup" timestamp="1602400716189">
+    <state x="431" y="147" width="672" height="687" key="search.everywhere.popup" timestamp="1602751152595">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1599115781529" />
-    <state x="431" y="147" width="672" height="687" key="search.everywhere.popup/0.0.1536.834@0.0.1536.834" timestamp="1602400716189" />
+    <state x="431" y="147" width="672" height="687" key="search.everywhere.popup/0.0.1536.834@0.0.1536.834" timestamp="1602751152595" />
     <state x="491" y="324" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1599142811770">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

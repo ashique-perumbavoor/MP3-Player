@@ -5,7 +5,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.os.Environment
+import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -123,25 +123,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     // function to scan and store song details in a database
+    @RequiresApi(Build.VERSION_CODES.R)
     private fun getSongs(){
-        val rootFolder = File(
-            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC),
-            ""
-        )
-        val files = rootFolder.listFiles()
-        if (files == null) {
-            Toast.makeText(this, "Couldn't find any song", Toast.LENGTH_LONG).show()
-        } else {
-            for (file in files) {
-                if (file.name.endsWith(".mp3") ||
-                    file.name.endsWith(".MP3") ||
-                    file.name.endsWith(".M4A") ||
-                    file.name.endsWith(".m4a") ||
-                    file.name.endsWith(".AAC") ||
-                    file.name.endsWith(".aac")) {
-                    databaseHandler.addSong(file.name, file.path, file.toURI())
-                }
-            }
+        val contentResolver = contentResolver
+        val uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+        val songCursor = contentResolver.query(uri, null, null, null , null)
+        if (songCursor != null && songCursor.moveToFirst()) {
+            do {
+                databaseHandler.addSong(
+                    songCursor.getString(songCursor.getColumnIndex(MediaStore.Audio.Media.TITLE)),
+                    songCursor.getString(songCursor.getColumnIndex(MediaStore.Audio.Media.DATA)),
+                    songCursor.getString(songCursor.getColumnIndex(MediaStore.Audio.Media.DATA)).toUri()
+                )
+                songCursor.getBlob(songCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ARTIST))
+            } while (songCursor.moveToNext())
+            songCursor.close()
         }
     }
 
