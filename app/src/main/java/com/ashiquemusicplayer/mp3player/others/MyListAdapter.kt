@@ -1,4 +1,4 @@
-package com.ashiquemusicplayer.mp3player
+package com.ashiquemusicplayer.mp3player.others
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import com.ashiquemusicplayer.mp3player.R
 
 // Class for adding songs to list view row by row
 class MyListAdapter(private val context: Activity, private val name: Array<String>)

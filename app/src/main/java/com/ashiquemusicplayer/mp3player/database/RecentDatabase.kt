@@ -1,4 +1,4 @@
-package com.ashiquemusicplayer.mp3player
+package com.ashiquemusicplayer.mp3player.database
 
 import android.annotation.SuppressLint
 import android.content.ContentValues
@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
 import android.database.sqlite.SQLiteOpenHelper
 import android.net.Uri
+import com.ashiquemusicplayer.mp3player.models.RecentModel
 
 class RecentDatabase (context: Context):SQLiteOpenHelper(context, "recent", null, 1) {
     companion object {

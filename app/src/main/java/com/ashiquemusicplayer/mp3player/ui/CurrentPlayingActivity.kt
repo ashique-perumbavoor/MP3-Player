@@ -1,4 +1,4 @@
-package com.ashiquemusicplayer.mp3player
+package com.ashiquemusicplayer.mp3player.ui
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -9,13 +9,18 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Message
 import android.provider.Settings
-import android.util.Log
 import android.widget.PopupMenu
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
+import com.ashiquemusicplayer.mp3player.*
+import com.ashiquemusicplayer.mp3player.database.DatabaseHandler
+import com.ashiquemusicplayer.mp3player.database.FavouritesDatabase
+import com.ashiquemusicplayer.mp3player.database.RecentDatabase
+import com.ashiquemusicplayer.mp3player.notification.NotificationService
+import com.ashiquemusicplayer.mp3player.objects.MusicObject
 import kotlinx.android.synthetic.main.activity_current_playing.*
 
 @Suppress("DEPRECATION")
@@ -60,7 +65,7 @@ class CurrentPlayingActivity : AppCompatActivity() {
         mp = MediaPlayer.create(this, songUri.toUri())
         mp.isLooping = true
         playPauseButton.setBackgroundResource(R.drawable.pause)
-        musicObject.playMusic(mp, songName, songID, songUri.toUri())
+        MusicObject.playMusic(mp, songName, songID, songUri.toUri())
 
         // Starting Notification
         startService(Intent(this, NotificationService::class.java).putExtra("songName", songName))
@@ -82,8 +87,8 @@ class CurrentPlayingActivity : AppCompatActivity() {
                 .replace("%26", " ")
                 .replace("%5B", " ")
                 .replace("%5D", " ")
-            musicObject.stopMusic()
-            musicObject.playMusic(mp, songName, songID, songUri.toUri())
+            MusicObject.stopMusic()
+            MusicObject.playMusic(mp, songName, songID, songUri.toUri())
             startService(Intent(this, NotificationService::class.java).putExtra("songName", songName))
             playPauseButton.setBackgroundResource(R.drawable.pause)
             val recentDatabase = RecentDatabase(this)
@@ -114,8 +119,8 @@ class CurrentPlayingActivity : AppCompatActivity() {
                 .replace("%26", " ")
                 .replace("%5B", " ")
                 .replace("%5D", " ")
-            musicObject.stopMusic()
-            musicObject.playMusic(mp, songName, songID, songUri.toUri())
+            MusicObject.stopMusic()
+            MusicObject.playMusic(mp, songName, songID, songUri.toUri())
             startService(Intent(this, NotificationService::class.java).putExtra("songName", songName))
             playPauseButton.setBackgroundResource(R.drawable.pause)
             val recentDatabase = RecentDatabase(this)
@@ -209,11 +214,11 @@ class CurrentPlayingActivity : AppCompatActivity() {
     // playing and pausing song and changing the button image
     private fun playBtnClick() {
         if (mp.isPlaying) {
-            musicObject.pauseMusic()
+            MusicObject.pauseMusic()
             stopService(Intent(this, NotificationService::class.java))
             playPauseButton.setBackgroundResource(R.drawable.play)
         } else {
-            musicObject.playMusicAgain()
+            MusicObject.playMusicAgain()
             startService(Intent(this, NotificationService::class.java).putExtra("songName", songName))
             playPauseButton.setBackgroundResource(R.drawable.pause)
         }

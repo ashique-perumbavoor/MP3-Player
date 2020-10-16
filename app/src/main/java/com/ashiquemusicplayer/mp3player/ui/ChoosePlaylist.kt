@@ -1,9 +1,14 @@
-package com.ashiquemusicplayer.mp3player
+package com.ashiquemusicplayer.mp3player.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import com.ashiquemusicplayer.mp3player.*
+import com.ashiquemusicplayer.mp3player.database.PlaylistDatabase
+import com.ashiquemusicplayer.mp3player.database.PlaylistSongDatabase
+import com.ashiquemusicplayer.mp3player.models.RecentModel
+import com.ashiquemusicplayer.mp3player.others.MyListAdapter
 import kotlinx.android.synthetic.main.activity_choose_playlist.*
 
 class ChoosePlaylist : AppCompatActivity() {

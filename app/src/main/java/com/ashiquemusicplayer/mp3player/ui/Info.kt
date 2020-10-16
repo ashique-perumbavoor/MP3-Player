@@ -1,8 +1,9 @@
-package com.ashiquemusicplayer.mp3player
+package com.ashiquemusicplayer.mp3player.ui
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.ashiquemusicplayer.mp3player.R
 import kotlinx.android.synthetic.main.activity_info.*
 
 class Info : AppCompatActivity() {

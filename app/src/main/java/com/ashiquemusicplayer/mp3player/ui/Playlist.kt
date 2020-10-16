@@ -1,4 +1,4 @@
-package com.ashiquemusicplayer.mp3player
+package com.ashiquemusicplayer.mp3player.ui
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +7,10 @@ import android.util.Log
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import com.ashiquemusicplayer.mp3player.*
+import com.ashiquemusicplayer.mp3player.database.PlaylistDatabase
+import com.ashiquemusicplayer.mp3player.models.RecentModel
+import com.ashiquemusicplayer.mp3player.others.MyListAdapter
 import kotlinx.android.synthetic.main.activity_playlist.*
 
 class Playlist : AppCompatActivity() {

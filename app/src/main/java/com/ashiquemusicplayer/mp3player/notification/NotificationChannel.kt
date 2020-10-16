@@ -1,4 +1,4 @@
-package com.ashiquemusicplayer.mp3player
+package com.ashiquemusicplayer.mp3player.notification
 
 import android.app.Application
 import android.app.NotificationChannel

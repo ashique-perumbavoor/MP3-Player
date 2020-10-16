@@ -1,4 +1,4 @@
-package com.ashiquemusicplayer.mp3player
+package com.ashiquemusicplayer.mp3player.ui
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -16,8 +16,12 @@ import android.widget.SeekBar
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.net.toUri
-import kotlinx.android.synthetic.main.activity_current_playing.*
-import kotlinx.android.synthetic.main.activity_music_playing.*
+import com.ashiquemusicplayer.mp3player.notification.NotificationService
+import com.ashiquemusicplayer.mp3player.R
+import com.ashiquemusicplayer.mp3player.database.RecentDatabase
+import com.ashiquemusicplayer.mp3player.database.DatabaseHandler
+import com.ashiquemusicplayer.mp3player.database.FavouritesDatabase
+import com.ashiquemusicplayer.mp3player.objects.MusicObject
 import kotlinx.android.synthetic.main.activity_music_playing.elapsedTimeLabel
 import kotlinx.android.synthetic.main.activity_music_playing.menu
 import kotlinx.android.synthetic.main.activity_music_playing.nextButton

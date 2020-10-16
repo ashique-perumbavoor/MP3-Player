@@ -1,28 +1,32 @@
-package com.ashiquemusicplayer.mp3player
+package com.ashiquemusicplayer.mp3player.ui
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
-import kotlinx.android.synthetic.main.activity_favourites.*
+import com.ashiquemusicplayer.mp3player.others.MyListAdapter
+import com.ashiquemusicplayer.mp3player.R
+import com.ashiquemusicplayer.mp3player.models.RecentModel
+import com.ashiquemusicplayer.mp3player.database.RecentDatabase
+import kotlinx.android.synthetic.main.activity_recent.*
 
-class Favourites : AppCompatActivity() {
+class RecentActivity : AppCompatActivity() {
 
-    private val favouritesDatabase = FavouritesDatabase(this)
+    private val recentDatabase = RecentDatabase(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_favourites)
+        setContentView(R.layout.activity_recent)
 
-        // Updating the recent database
+        // Updating the recently played music
         updateList()
 
         // Playing the desired song of the user
-        favouriteList.setOnItemClickListener { parent, view, position, id ->
+        recentList.setOnItemClickListener { parent, view, position, id ->
             Log.d("song info", "$parent    $view    $position    $id")
-            val songInfo = favouritesDatabase.searchSong(position+1)
+            val songInfo = recentDatabase.searchSong(position+1)
             if (songInfo != null) {
                 startActivity(Intent(this, CurrentPlayingActivity::class.java).putExtra("songInfo",songInfo))
                 val recentDatabase = RecentDatabase(this)
@@ -35,7 +39,7 @@ class Favourites : AppCompatActivity() {
 
     // function to show the scanned songs to the user
     private fun updateList() {
-        val sl: List<RecentModel> = favouritesDatabase.displaySongs()
+        val sl: List<RecentModel> = recentDatabase.displaySongs()
         val songName = Array(sl.size){"null"}
         for ((index, i) in sl.withIndex()) {
             songName[index] = i.name
@@ -49,6 +53,6 @@ class Favourites : AppCompatActivity() {
         }
         // updating the list shown to the user
         val myListAdapter = MyListAdapter(this, songName)
-        favouriteList.adapter = myListAdapter
+        recentList.adapter = myListAdapter
     }
 }

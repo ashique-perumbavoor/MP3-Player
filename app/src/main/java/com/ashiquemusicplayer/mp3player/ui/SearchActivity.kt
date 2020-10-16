@@ -1,14 +1,17 @@
-package com.ashiquemusicplayer.mp3player
+package com.ashiquemusicplayer.mp3player.ui
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.ArrayAdapter
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.core.net.toUri
-import kotlinx.android.synthetic.main.activity_main.*
+import com.ashiquemusicplayer.mp3player.others.MyListAdapter
+import com.ashiquemusicplayer.mp3player.R
+import com.ashiquemusicplayer.mp3player.models.RecentModel
+import com.ashiquemusicplayer.mp3player.database.DatabaseHandler
+import com.ashiquemusicplayer.mp3player.database.RecentDatabase
 import kotlinx.android.synthetic.main.activity_search.*
 
 class SearchActivity : AppCompatActivity() {

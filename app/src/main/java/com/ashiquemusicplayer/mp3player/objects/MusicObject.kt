@@ -1,4 +1,4 @@
-package com.ashiquemusicplayer.mp3player
+package com.ashiquemusicplayer.mp3player.objects
 
 import android.media.MediaPlayer
 import android.net.Uri

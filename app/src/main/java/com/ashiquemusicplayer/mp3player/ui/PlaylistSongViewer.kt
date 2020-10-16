@@ -1,9 +1,13 @@
-package com.ashiquemusicplayer.mp3player
+package com.ashiquemusicplayer.mp3player.ui
 
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.ashiquemusicplayer.mp3player.others.MyListAdapter
+import com.ashiquemusicplayer.mp3player.R
+import com.ashiquemusicplayer.mp3player.models.RecentModel
+import com.ashiquemusicplayer.mp3player.database.PlaylistSongDatabase
 import kotlinx.android.synthetic.main.activity_playlist_song_viewer.*
 
 class PlaylistSongViewer : AppCompatActivity() {

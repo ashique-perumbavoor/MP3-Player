@@ -1,4 +1,4 @@
-package com.ashiquemusicplayer.mp3player
+package com.ashiquemusicplayer.mp3player.ui
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -13,6 +13,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
+import com.ashiquemusicplayer.mp3player.*
+import com.ashiquemusicplayer.mp3player.database.DatabaseHandler
+import com.ashiquemusicplayer.mp3player.database.RecentDatabase
+import com.ashiquemusicplayer.mp3player.models.Model
+import com.ashiquemusicplayer.mp3player.others.MyListAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 
 @Suppress("DEPRECATION")

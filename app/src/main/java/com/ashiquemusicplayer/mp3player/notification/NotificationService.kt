@@ -1,10 +1,12 @@
-package com.ashiquemusicplayer.mp3player
+package com.ashiquemusicplayer.mp3player.notification
 
 import android.app.PendingIntent
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
+import com.ashiquemusicplayer.mp3player.R
+import com.ashiquemusicplayer.mp3player.ui.MainActivity
 
 class NotificationService: Service() {
 

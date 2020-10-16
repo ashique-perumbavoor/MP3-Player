@@ -1,4 +1,4 @@
-package com.ashiquemusicplayer.mp3player
+package com.ashiquemusicplayer.mp3player.database
 
 import android.annotation.SuppressLint
 import android.content.ContentValues
@@ -8,7 +8,8 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
 import android.database.sqlite.SQLiteOpenHelper
 import android.net.Uri
-import java.net.URI
+import com.ashiquemusicplayer.mp3player.models.Model
+import com.ashiquemusicplayer.mp3player.models.RecentModel
 import kotlin.collections.ArrayList
 
 class DatabaseHandler(context: Context): SQLiteOpenHelper(context, "MAIN_SONG", null, 1) {

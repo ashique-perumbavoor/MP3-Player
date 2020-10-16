@@ -13,37 +13,37 @@
         tools:ignore="ProtectedPermissions" />
 
     <application
-        android:name=".NotificationChannel"
+        android:name=".notification.NotificationChannel"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SearchActivity"></activity>
-        <activity android:name=".MusicPlayingActivity" />
-        <activity android:name=".PlaylistSongViewer" />
-        <activity android:name=".ChoosePlaylist" />
-        <activity android:name=".Playlist" />
-        <activity android:name=".Favourites" />
-        <activity android:name=".RecentActivity" />
+        <activity android:name=".ui.SearchActivity"></activity>
+        <activity android:name=".ui.MusicPlayingActivity" />
+        <activity android:name=".ui.PlaylistSongViewer" />
+        <activity android:name=".ui.ChoosePlaylist" />
+        <activity android:name=".ui.Playlist" />
+        <activity android:name=".ui.Favourites" />
+        <activity android:name=".ui.RecentActivity" />
         <activity
-            android:name=".Info"
+            android:name=".ui.Info"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".CurrentPlayingActivity"
+            android:name=".ui.CurrentPlayingActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".PrivacyAndPolicy"
+            android:name=".ui.PrivacyAndPolicy"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".DevelopersInfo"
+            android:name=".ui.DevelopersInfo"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ContactMe"
+            android:name=".ui.ContactMe"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -52,7 +52,7 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".NotificationService" />
+        <service android:name=".notification.NotificationService" />
     </application>
 
 </manifest>
