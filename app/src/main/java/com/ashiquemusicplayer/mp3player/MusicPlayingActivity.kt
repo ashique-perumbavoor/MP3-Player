@@ -16,9 +16,13 @@ import android.widget.SeekBar
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.net.toUri
+import kotlinx.android.synthetic.main.activity_current_playing.*
 import kotlinx.android.synthetic.main.activity_music_playing.*
 import kotlinx.android.synthetic.main.activity_music_playing.elapsedTimeLabel
+import kotlinx.android.synthetic.main.activity_music_playing.menu
+import kotlinx.android.synthetic.main.activity_music_playing.nextButton
 import kotlinx.android.synthetic.main.activity_music_playing.playPauseButton
+import kotlinx.android.synthetic.main.activity_music_playing.previousButton
 import kotlinx.android.synthetic.main.activity_music_playing.progressBar
 import kotlinx.android.synthetic.main.activity_music_playing.remainingTimeLabel
 import kotlinx.android.synthetic.main.activity_music_playing.song_name
@@ -88,6 +92,13 @@ class MusicPlayingActivity : AppCompatActivity() {
             recentDatabase.addSong(songInfoDB[0], songUri)
         }
 
+        // fast forwarding 5 seconds on long click
+        nextButton.setOnLongClickListener {
+            val time = mp.currentPosition + 5000
+            mp.seekTo(time)
+            true
+        }
+
         // Previous button to play the previous song
         previousButton.setOnClickListener {
             mp.pause()
@@ -111,6 +122,13 @@ class MusicPlayingActivity : AppCompatActivity() {
             playPauseButton.setBackgroundResource(R.drawable.pause)
             val recentDatabase = RecentDatabase(this)
             recentDatabase.addSong(songInfoDB[0], songUri)
+        }
+
+        // delaying 5 seconds on long click
+        previousButton.setOnLongClickListener {
+            val time = mp.currentPosition - 5000
+            mp.seekTo(time)
+            true
         }
 
         // Progressbar creating
@@ -198,6 +216,7 @@ class MusicPlayingActivity : AppCompatActivity() {
             playPauseButton.setBackgroundResource(R.drawable.play)
         } else {
             MusicObject.playMusicAgain()
+            songName = song_name.text.toString()
             startService(Intent(this, NotificationService::class.java).putExtra("songName", songName))
             playPauseButton.setBackgroundResource(R.drawable.pause)
         }

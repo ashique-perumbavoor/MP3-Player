@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Message
 import android.provider.Settings
+import android.util.Log
 import android.widget.PopupMenu
 import android.widget.SeekBar
 import android.widget.Toast
@@ -89,6 +90,13 @@ class CurrentPlayingActivity : AppCompatActivity() {
             recentDatabase.addSong(songInfo[0], songInfo[1].toUri())
         }
 
+        // fast forwarding 5 seconds on long click
+        nextButton.setOnLongClickListener {
+            val time = mp.currentPosition + 5000
+            mp.seekTo(time)
+            true
+        }
+
         // Previous button to play the previous song
         previousButton.setOnClickListener {
             mp.pause()
@@ -112,6 +120,13 @@ class CurrentPlayingActivity : AppCompatActivity() {
             playPauseButton.setBackgroundResource(R.drawable.pause)
             val recentDatabase = RecentDatabase(this)
             recentDatabase.addSong(songInfo[0], songInfo[1].toUri())
+        }
+
+        // delaying 5 seconds on long click
+        previousButton.setOnLongClickListener {
+            val time = mp.currentPosition - 5000
+            mp.seekTo(time)
+            true
         }
 
         // Progressbar creating
