@@ -14,7 +14,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import kotlinx.android.synthetic.main.activity_main.*
-import java.io.File
 
 @Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
@@ -31,6 +30,7 @@ class MainActivity : AppCompatActivity() {
     private val databaseHandler = DatabaseHandler(this)
     private var flag = 0
 
+    @RequiresApi(Build.VERSION_CODES.R)
     @SuppressLint("CommitPrefEdits")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,6 +89,10 @@ class MainActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "Play any music to use this feature", Toast.LENGTH_LONG).show()
             }
+        }
+
+        search.setOnClickListener {
+            startActivity(Intent(this, SearchActivity::class.java))
         }
     }
 

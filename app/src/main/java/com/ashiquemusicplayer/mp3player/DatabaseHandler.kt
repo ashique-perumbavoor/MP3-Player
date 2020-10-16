@@ -107,4 +107,25 @@ class DatabaseHandler(context: Context): SQLiteOpenHelper(context, "MAIN_SONG", 
         }
         return null
     }
+
+    fun getSongName(): ArrayList<RecentModel> {
+        val songList:ArrayList<RecentModel> = ArrayList()
+        val selectQuery = "SELECT * FROM $DATABASE_NAME"
+        val db = this.readableDatabase
+        val cursor: Cursor
+        try{
+            cursor = db.rawQuery(selectQuery, null)
+        }catch (e: SQLiteException) {
+            db.execSQL(selectQuery)
+            return ArrayList()
+        }
+        if (cursor.moveToFirst()) {
+            do {
+                val songName = cursor.getString(cursor.getColumnIndex(SONG_NAME))
+                val sl= RecentModel(name = songName)
+                songList.add(sl)
+            } while (cursor.moveToNext())
+        }
+        return songList
+    }
 }
