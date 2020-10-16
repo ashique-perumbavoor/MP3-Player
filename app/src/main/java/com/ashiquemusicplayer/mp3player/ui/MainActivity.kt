@@ -34,6 +34,8 @@ class MainActivity : AppCompatActivity() {
     // object of DatabaseHandler class
     private val databaseHandler = DatabaseHandler(this)
     private var flag = 0
+    private lateinit var songName: Array<String>
+    private lateinit var temporaryArray: Array<String>
 
     @RequiresApi(Build.VERSION_CODES.R)
     @SuppressLint("CommitPrefEdits")
@@ -96,8 +98,28 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        // Click listener for searching the song
         search.setOnClickListener {
             startActivity(Intent(this, SearchActivity::class.java))
+        }
+
+        shuffle.setOnClickListener {
+            temporaryArray = songName
+            var count = 0
+            for ((index, i) in temporaryArray.withIndex()) {
+                if (index % 2 != 0) {
+                    songName[count] = temporaryArray[index]
+                    count++
+                }
+            }
+            for ((index, i) in temporaryArray.withIndex()) {
+                if (index % 2 == 0) {
+                    songName[count] = temporaryArray[index]
+                    count++
+                }
+            }
+            val myListAdapter = MyListAdapter(this, songName)
+            songView.adapter = myListAdapter
         }
     }
 
@@ -153,7 +175,7 @@ class MainActivity : AppCompatActivity() {
     // function to show the scanned songs to the user
     private fun updateList() {
         val sl: List<Model> = databaseHandler.displaySongs()
-        val songName = Array(sl.size){"null"}
+        songName = Array(sl.size){"null"}
         val songPath = Array(sl.size){"null"}
         val songURI = Array(sl.size){"null"}
         for ((index, i) in sl.withIndex()) {

@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
 import android.database.sqlite.SQLiteOpenHelper
 import android.net.Uri
+import android.util.Log
+import androidx.core.net.toUri
 import com.ashiquemusicplayer.mp3player.models.Model
 import com.ashiquemusicplayer.mp3player.models.RecentModel
 import kotlin.collections.ArrayList
@@ -109,6 +111,7 @@ class DatabaseHandler(context: Context): SQLiteOpenHelper(context, "MAIN_SONG", 
         return null
     }
 
+    @SuppressLint("Recycle")
     fun getSongName(): ArrayList<RecentModel> {
         val songList:ArrayList<RecentModel> = ArrayList()
         val selectQuery = "SELECT * FROM $DATABASE_NAME"
