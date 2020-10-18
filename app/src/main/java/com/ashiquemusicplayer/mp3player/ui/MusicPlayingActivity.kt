@@ -2,6 +2,7 @@ package com.ashiquemusicplayer.mp3player.ui
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.media.MediaPlayer
 import android.media.RingtoneManager
 import android.net.Uri
@@ -22,6 +23,7 @@ import com.ashiquemusicplayer.mp3player.database.RecentDatabase
 import com.ashiquemusicplayer.mp3player.database.DatabaseHandler
 import com.ashiquemusicplayer.mp3player.database.FavouritesDatabase
 import com.ashiquemusicplayer.mp3player.objects.MusicObject
+import kotlinx.android.synthetic.main.activity_current_playing.*
 import kotlinx.android.synthetic.main.activity_music_playing.elapsedTimeLabel
 import kotlinx.android.synthetic.main.activity_music_playing.menu
 import kotlinx.android.synthetic.main.activity_music_playing.nextButton
@@ -39,6 +41,7 @@ class MusicPlayingActivity : AppCompatActivity() {
     private lateinit var mp: MediaPlayer
     private val databaseHandler = DatabaseHandler(this)
     private lateinit var songName: String
+    private lateinit var iName: String
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -182,6 +185,13 @@ class MusicPlayingActivity : AppCompatActivity() {
                 true
             }
             popupMenu.show()
+        }
+
+        iName = song_name.text.toString()
+        val imageArray = databaseHandler.getImage(iName)
+        if (imageArray != null) {
+            val bmp = BitmapFactory.decodeByteArray(imageArray, 0, imageArray.size)
+            songLogo.setImageBitmap(bmp)
         }
     }
 

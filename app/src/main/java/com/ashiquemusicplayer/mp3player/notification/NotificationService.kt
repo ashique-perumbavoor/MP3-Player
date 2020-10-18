@@ -7,12 +7,13 @@ import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import com.ashiquemusicplayer.mp3player.R
 import com.ashiquemusicplayer.mp3player.ui.MainActivity
+import com.ashiquemusicplayer.mp3player.ui.MusicPlayingActivity
 
 class NotificationService: Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
-        val notificationIntent = Intent(this, MainActivity::class.java)
+        val notificationIntent = Intent(this, MusicPlayingActivity::class.java)
         val pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0)
 
         val songName = intent?.getStringExtra("songName")

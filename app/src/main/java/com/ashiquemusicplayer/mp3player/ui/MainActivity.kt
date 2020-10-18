@@ -17,6 +17,7 @@ import com.ashiquemusicplayer.mp3player.*
 import com.ashiquemusicplayer.mp3player.database.DatabaseHandler
 import com.ashiquemusicplayer.mp3player.database.RecentDatabase
 import com.ashiquemusicplayer.mp3player.models.Model
+import com.ashiquemusicplayer.mp3player.models.ModelWithImage
 import com.ashiquemusicplayer.mp3player.others.MyListAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -35,6 +36,7 @@ class MainActivity : AppCompatActivity() {
     private val databaseHandler = DatabaseHandler(this)
     private var flag = 0
     private lateinit var songName: Array<String>
+    private lateinit var songImage: Array<Any>
     private lateinit var temporaryArray: Array<String>
 
     @RequiresApi(Build.VERSION_CODES.R)
@@ -118,7 +120,7 @@ class MainActivity : AppCompatActivity() {
                     count++
                 }
             }
-            val myListAdapter = MyListAdapter(this, songName)
+            val myListAdapter = MyListAdapter(this, songName, songImage)
             songView.adapter = myListAdapter
         }
     }
@@ -161,12 +163,22 @@ class MainActivity : AppCompatActivity() {
         val songCursor = contentResolver.query(uri, null, null, null , null)
         if (songCursor != null && songCursor.moveToFirst()) {
             do {
-                databaseHandler.addSong(
-                    songCursor.getString(songCursor.getColumnIndex(MediaStore.Audio.Media.TITLE)),
-                    songCursor.getString(songCursor.getColumnIndex(MediaStore.Audio.Media.DATA)),
-                    songCursor.getString(songCursor.getColumnIndex(MediaStore.Audio.Media.DATA)).toUri()
-                )
-                songCursor.getBlob(songCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ARTIST))
+                val image = songCursor.getBlob(songCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ARTIST))
+                if (image != null) {
+                    databaseHandler.addSong(
+                        songCursor.getString(songCursor.getColumnIndex(MediaStore.Audio.Media.TITLE)),
+                        songCursor.getString(songCursor.getColumnIndex(MediaStore.Audio.Media.DATA)),
+                        songCursor.getString(songCursor.getColumnIndex(MediaStore.Audio.Media.DATA)).toUri(),
+                        image
+                    )
+                } else {
+                    databaseHandler.addSongWithNoImage(
+                        songCursor.getString(songCursor.getColumnIndex(MediaStore.Audio.Media.TITLE)),
+                        songCursor.getString(songCursor.getColumnIndex(MediaStore.Audio.Media.DATA)),
+                        songCursor.getString(songCursor.getColumnIndex(MediaStore.Audio.Media.DATA)).toUri()
+                        )
+                }
+
             } while (songCursor.moveToNext())
             songCursor.close()
         }
@@ -174,10 +186,9 @@ class MainActivity : AppCompatActivity() {
 
     // function to show the scanned songs to the user
     private fun updateList() {
-        val sl: List<Model> = databaseHandler.displaySongs()
+        val sl: List<ModelWithImage> = databaseHandler.displaySongs()
         songName = Array(sl.size){"null"}
-        val songPath = Array(sl.size){"null"}
-        val songURI = Array(sl.size){"null"}
+        songImage = Array<Any>(sl.size){""}
         for ((index, i) in sl.withIndex()) {
             songName[index] = i.name
                 .replace("%20", " ")
@@ -187,12 +198,13 @@ class MainActivity : AppCompatActivity() {
                 .replace("%26", " ")
                 .replace("%5B", " ")
                 .replace("%5D", " ")
-            songPath[index] = i.path
-            songURI[index] = i.songURI
+            if (i.image != null) {
+                songImage[index] = i.image!!
+            }
         }
 
         // updating the list shown to the user
-        val myListAdapter = MyListAdapter(this, songName)
+        val myListAdapter = MyListAdapter(this, songName, songImage)
         songView.adapter = myListAdapter
     }
 }

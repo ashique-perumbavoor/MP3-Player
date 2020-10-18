@@ -48,7 +48,8 @@ class PlaylistSongViewer : AppCompatActivity() {
         }
 
         // updating the list shown to the user
-        val myListAdapter = MyListAdapter(this, songName)
+        val songImage: Array<Any> = Array(sl.size){"null"}
+        val myListAdapter = MyListAdapter(this, songName, songImage)
         songList.adapter = myListAdapter
     }
 }

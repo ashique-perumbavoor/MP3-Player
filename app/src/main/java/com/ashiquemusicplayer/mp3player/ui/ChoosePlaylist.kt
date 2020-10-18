@@ -43,12 +43,15 @@ class ChoosePlaylist : AppCompatActivity() {
     private fun updateList() {
         val sl: ArrayList<RecentModel> = playlistDatabase.displayPlaylist()
         val playlistName = Array(sl.size){"null"}
+        var size = 0
         for ((index, i) in sl.withIndex()) {
             playlistName[index] = i.name
+            size = index
         }
 
         // updating the list shown to the user
-        val myListAdapter = MyListAdapter(this, playlistName)
+        val playlistImage = Array<Any>(size){"null"}
+        val myListAdapter = MyListAdapter(this, playlistName, playlistImage)
         choosePlaylist.adapter = myListAdapter
     }
 }

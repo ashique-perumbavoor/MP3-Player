@@ -5,11 +5,12 @@ import android.app.Activity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.ImageView
 import android.widget.TextView
 import com.ashiquemusicplayer.mp3player.R
 
 // Class for adding songs to list view row by row
-class MyListAdapter(private val context: Activity, private val name: Array<String>)
+class MyListAdapter(private val context: Activity, private val name: Array<String>, image: Array<Any>)
     : ArrayAdapter<String>(context, R.layout.songlistingmodel, name) {
 
     @SuppressLint("SetTextI18n", "ViewHolder", "InflateParams")
@@ -17,6 +18,7 @@ class MyListAdapter(private val context: Activity, private val name: Array<Strin
         val inflater = context.layoutInflater
         val rowView = inflater.inflate(R.layout.songlistingmodel, null, true)
         val nameText = rowView.findViewById<TextView>(R.id.songName)
+        val songImage = rowView.findViewById<ImageView>(R.id.songImage)
         nameText.text = name[position]
         return rowView
     }

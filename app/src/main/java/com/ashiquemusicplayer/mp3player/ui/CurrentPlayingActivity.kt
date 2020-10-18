@@ -2,6 +2,8 @@ package com.ashiquemusicplayer.mp3player.ui
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.media.MediaPlayer
 import android.media.RingtoneManager
 import android.os.Build
@@ -19,6 +21,7 @@ import com.ashiquemusicplayer.mp3player.*
 import com.ashiquemusicplayer.mp3player.database.DatabaseHandler
 import com.ashiquemusicplayer.mp3player.database.FavouritesDatabase
 import com.ashiquemusicplayer.mp3player.database.RecentDatabase
+import com.ashiquemusicplayer.mp3player.models.ModelWithImage
 import com.ashiquemusicplayer.mp3player.notification.NotificationService
 import com.ashiquemusicplayer.mp3player.objects.MusicObject
 import kotlinx.android.synthetic.main.activity_current_playing.*
@@ -44,6 +47,9 @@ class CurrentPlayingActivity : AppCompatActivity() {
         val songInfo = intent.getStringArrayExtra("songInfo")
         // setting song name
         songName = songInfo?.get(0).toString()
+        // Getting image of the song
+        val sl: ArrayList<ModelWithImage> = databaseHandler.displaySongs()
+
         song_name.text = songName
             .replace("%20", " ")
             .replace("%5B", " ")
@@ -181,6 +187,13 @@ class CurrentPlayingActivity : AppCompatActivity() {
                 true
             }
             popupMenu.show()
+        }
+
+        val imageArray = databaseHandler.getImage(songName)
+        if (imageArray != null) {
+            val bmp = BitmapFactory.decodeByteArray(imageArray, 0, imageArray.size)
+            val i = BitmapFactory.decodeByteArray(imageArray, 0, imageArray.size)
+            songLogo.setImageBitmap(bmp)
         }
     }
 

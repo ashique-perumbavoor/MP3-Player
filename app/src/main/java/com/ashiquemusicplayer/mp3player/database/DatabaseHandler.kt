@@ -8,9 +8,8 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
 import android.database.sqlite.SQLiteOpenHelper
 import android.net.Uri
-import android.util.Log
-import androidx.core.net.toUri
-import com.ashiquemusicplayer.mp3player.models.Model
+import com.ashiquemusicplayer.mp3player.models.ImageModel
+import com.ashiquemusicplayer.mp3player.models.ModelWithImage
 import com.ashiquemusicplayer.mp3player.models.RecentModel
 import kotlin.collections.ArrayList
 
@@ -21,11 +20,12 @@ class DatabaseHandler(context: Context): SQLiteOpenHelper(context, "MAIN_SONG", 
         const val SONG_PATH = "songPath"
         const val SONG_URI = "song"
         const val DATABASE_NAME = "songDatabase"
+        const val SONG_IMAGE = "songImage"
     }
 
     // creating main database
     override fun onCreate(db: SQLiteDatabase?) {
-        db?.execSQL("CREATE TABLE $DATABASE_NAME ( $SONG_ID INTEGER PRIMARY KEY,$SONG_NAME TEXT, $SONG_PATH TEXT, $SONG_URI BLOB)")
+        db?.execSQL("CREATE TABLE $DATABASE_NAME ( $SONG_ID INTEGER PRIMARY KEY,$SONG_NAME TEXT, $SONG_PATH TEXT, $SONG_URI BLOB, $SONG_IMAGE BLOB)")
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
@@ -33,7 +33,17 @@ class DatabaseHandler(context: Context): SQLiteOpenHelper(context, "MAIN_SONG", 
     }
 
     // adding the song details to the database
-    fun addSong(name: String, path: String, absoluteFile: Uri) {
+    fun addSong(name: String, path: String, absoluteFile: Uri, image: ByteArray) {
+        val db =this.writableDatabase
+        val contentValues = ContentValues()
+        contentValues.put(SONG_NAME, name)
+        contentValues.put(SONG_PATH, path)
+        contentValues.put(SONG_URI, absoluteFile.toString())
+        contentValues.put(SONG_IMAGE, image)
+        db.insert(DATABASE_NAME, null, contentValues)
+    }
+
+    fun addSongWithNoImage(name: String, path: String, absoluteFile: Uri) {
         val db =this.writableDatabase
         val contentValues = ContentValues()
         contentValues.put(SONG_NAME, name)
@@ -44,8 +54,44 @@ class DatabaseHandler(context: Context): SQLiteOpenHelper(context, "MAIN_SONG", 
 
     // adding song details from database to array for showing to the user
     @SuppressLint("Recycle")
-    fun displaySongs(): ArrayList<Model> {
-        val songList:ArrayList<Model> = ArrayList()
+    fun displaySongs(): ArrayList<ModelWithImage> {
+        val songList:ArrayList<ModelWithImage> = ArrayList()
+        val selectQuery = "SELECT * FROM $DATABASE_NAME"
+        val db = this.readableDatabase
+        val cursor: Cursor
+        try{
+            cursor = db.rawQuery(selectQuery, null)
+        }catch (e: SQLiteException) {
+            db.execSQL(selectQuery)
+            return ArrayList()
+        }
+        if (cursor.moveToFirst()) {
+            do {
+                if (cursor.getBlob(cursor.getColumnIndex(SONG_IMAGE)) != null) {
+                    val songName = cursor.getString(cursor.getColumnIndex(SONG_NAME))
+                    val path = cursor.getString(cursor.getColumnIndex(SONG_PATH))
+                    val songURI = cursor.getString(cursor.getColumnIndex(SONG_URI))
+                    val songID = cursor.getString(cursor.getColumnIndex(SONG_ID))
+                    val image = cursor.getBlob(cursor.getColumnIndex(SONG_IMAGE))
+                    val sl= ModelWithImage(name = songName, path = path, songURI = songURI, songID = songID, image = image)
+                    songList.add(sl)
+                } else {
+                    val songName = cursor.getString(cursor.getColumnIndex(SONG_NAME))
+                    val path = cursor.getString(cursor.getColumnIndex(SONG_PATH))
+                    val songURI = cursor.getString(cursor.getColumnIndex(SONG_URI))
+                    val songID = cursor.getString(cursor.getColumnIndex(SONG_ID))
+                    val sl= ModelWithImage(name = songName, path = path, songURI = songURI, songID = songID, image = null)
+                    songList.add(sl)
+                }
+            } while (cursor.moveToNext())
+        }
+        return songList
+    }
+
+    // adding song details from database to array for showing to the user
+    @SuppressLint("Recycle")
+    fun displaySongsWithImage(): ArrayList<ModelWithImage> {
+        val songList:ArrayList<ModelWithImage> = ArrayList()
         val selectQuery = "SELECT * FROM $DATABASE_NAME"
         val db = this.readableDatabase
         val cursor: Cursor
@@ -61,7 +107,8 @@ class DatabaseHandler(context: Context): SQLiteOpenHelper(context, "MAIN_SONG", 
                 val path = cursor.getString(cursor.getColumnIndex(SONG_PATH))
                 val songURI = cursor.getString(cursor.getColumnIndex(SONG_URI))
                 val songID = cursor.getString(cursor.getColumnIndex(SONG_ID))
-                val sl= Model(name = songName, path = path, songURI = songURI, songID = songID)
+                val image = cursor.getBlob(cursor.getColumnIndex(SONG_IMAGE))
+                val sl= ModelWithImage(name = songName, path = path, songURI = songURI, songID = songID, image = image)
                 songList.add(sl)
             } while (cursor.moveToNext())
         }
@@ -131,5 +178,32 @@ class DatabaseHandler(context: Context): SQLiteOpenHelper(context, "MAIN_SONG", 
             } while (cursor.moveToNext())
         }
         return songList
+    }
+
+    fun getImage(name: String): ByteArray? {
+        val songList:ArrayList<ImageModel> = ArrayList()
+        val selectQuery = "SELECT * FROM $DATABASE_NAME"
+        val db = this.readableDatabase
+        val cursor: Cursor
+        try{
+            cursor = db.rawQuery(selectQuery, null)
+        }catch (e: SQLiteException) {
+            db.execSQL(selectQuery)
+            return null
+        }
+        if (cursor.moveToFirst()) {
+            do {
+                val songImage = cursor.getBlob(cursor.getColumnIndex(SONG_IMAGE))
+                val songName = cursor.getString(cursor.getColumnIndex(SONG_NAME))
+                if (songName.toString() == name) {
+                    if (songImage != null) {
+                        val sl= ImageModel(image = songImage)
+                        songList.add(sl)
+                        return songImage
+                    }
+                }
+            } while (cursor.moveToNext())
+        }
+        return null
     }
 }

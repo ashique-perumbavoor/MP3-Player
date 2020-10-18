@@ -53,7 +53,8 @@ class Favourites : AppCompatActivity() {
                 .replace("%5D", " ")
         }
         // updating the list shown to the user
-        val myListAdapter = MyListAdapter(this, songName)
+        val favouritesImage: Array<Any> = Array(sl.size){"null"}
+        val myListAdapter = MyListAdapter(this, songName, favouritesImage)
         favouriteList.adapter = myListAdapter
     }
 }

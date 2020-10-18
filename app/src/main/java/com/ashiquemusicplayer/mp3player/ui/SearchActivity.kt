@@ -32,7 +32,8 @@ class SearchActivity : AppCompatActivity() {
                 .replace("%5B", " ")
                 .replace("%5D", " ")
         }
-        val myListAdapter = MyListAdapter(this, songName)
+        val songImage = Array<Any>(sl.size){""}
+        val myListAdapter = MyListAdapter(this, songName, songImage)
         searchList.adapter = myListAdapter
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
