@@ -8,7 +8,7 @@ import java.util.concurrent.Executors
 object MusicObject {
 
     private lateinit var mediaPlayer: MediaPlayer
-    private val executor: ExecutorService = Executors.newSingleThreadExecutor()
+    private val executor: ExecutorService = Executors.newCachedThreadPool()
     private var flag = 0
     private var musicName = ""
     private var musicID = 1

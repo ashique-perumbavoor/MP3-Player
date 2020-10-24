@@ -2,14 +2,10 @@ package com.ashiquemusicplayer.mp3player.ui
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.MediaPlayer
 import android.media.RingtoneManager
-import android.os.Build
-import android.os.Bundle
-import android.os.Handler
-import android.os.Message
+import android.os.*
 import android.provider.Settings
 import android.widget.PopupMenu
 import android.widget.SeekBar
@@ -21,7 +17,6 @@ import com.ashiquemusicplayer.mp3player.*
 import com.ashiquemusicplayer.mp3player.database.DatabaseHandler
 import com.ashiquemusicplayer.mp3player.database.FavouritesDatabase
 import com.ashiquemusicplayer.mp3player.database.RecentDatabase
-import com.ashiquemusicplayer.mp3player.models.ModelWithImage
 import com.ashiquemusicplayer.mp3player.notification.NotificationService
 import com.ashiquemusicplayer.mp3player.objects.MusicObject
 import kotlinx.android.synthetic.main.activity_current_playing.*
@@ -30,11 +25,11 @@ import kotlinx.android.synthetic.main.activity_current_playing.*
 class CurrentPlayingActivity : AppCompatActivity() {
 
     private val databaseHandler = DatabaseHandler(this)
-    private val musicObject = MusicObject
     lateinit var mp: MediaPlayer
     private var songID = 0
     private var songUri = ""
     private var songName = ""
+    private var lastClickTime = 0
 
     @RequiresApi(Build.VERSION_CODES.M)
     @SuppressLint("SetTextI18n")
@@ -47,8 +42,6 @@ class CurrentPlayingActivity : AppCompatActivity() {
         val songInfo = intent.getStringArrayExtra("songInfo")
         // setting song name
         songName = songInfo?.get(0).toString()
-        // Getting image of the song
-        val sl: ArrayList<ModelWithImage> = databaseHandler.displaySongs()
 
         song_name.text = songName
             .replace("%20", " ")
@@ -78,6 +71,11 @@ class CurrentPlayingActivity : AppCompatActivity() {
 
         // Next button to play the next song
         nextButton.setOnClickListener {
+            // mis-clicking prevention, using threshold of 1000 ms
+            if (SystemClock.elapsedRealtime() - lastClickTime < 100){
+                return@setOnClickListener
+            }
+            lastClickTime = SystemClock.elapsedRealtime().toInt()
             mp.pause()
             val nextSongID: Int = songID + 1
             songID++
@@ -110,6 +108,11 @@ class CurrentPlayingActivity : AppCompatActivity() {
 
         // Previous button to play the previous song
         previousButton.setOnClickListener {
+            // mis-clicking prevention, using threshold of 1000 ms
+            if (SystemClock.elapsedRealtime() - lastClickTime < 100){
+                return@setOnClickListener
+            }
+            lastClickTime = SystemClock.elapsedRealtime().toInt()
             mp.pause()
             val nextSongID: Int = songID - 1
             songID--
@@ -192,7 +195,6 @@ class CurrentPlayingActivity : AppCompatActivity() {
         val imageArray = databaseHandler.getImage(songName)
         if (imageArray != null) {
             val bmp = BitmapFactory.decodeByteArray(imageArray, 0, imageArray.size)
-            val i = BitmapFactory.decodeByteArray(imageArray, 0, imageArray.size)
             songLogo.setImageBitmap(bmp)
         }
     }

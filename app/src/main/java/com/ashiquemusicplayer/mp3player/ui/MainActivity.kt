@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.os.SystemClock
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
@@ -16,7 +17,6 @@ import androidx.core.net.toUri
 import com.ashiquemusicplayer.mp3player.*
 import com.ashiquemusicplayer.mp3player.database.DatabaseHandler
 import com.ashiquemusicplayer.mp3player.database.RecentDatabase
-import com.ashiquemusicplayer.mp3player.models.Model
 import com.ashiquemusicplayer.mp3player.models.ModelWithImage
 import com.ashiquemusicplayer.mp3player.others.MyListAdapter
 import kotlinx.android.synthetic.main.activity_main.*
@@ -38,12 +38,18 @@ class MainActivity : AppCompatActivity() {
     private lateinit var songName: Array<String>
     private lateinit var songImage: Array<Any>
     private lateinit var temporaryArray: Array<String>
+    private var lastClickTime = 0;
 
     @RequiresApi(Build.VERSION_CODES.R)
     @SuppressLint("CommitPrefEdits")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // checking for permissions and if permission not granted asking for permission
+        if (hasNoPermission()) {
+            requestPermission()
+        }
 
         // deleting current database if exist
         deleteDatabase(databaseHandler.databaseName)
@@ -106,15 +112,20 @@ class MainActivity : AppCompatActivity() {
         }
 
         shuffle.setOnClickListener {
+            // mis-clicking prevention, using threshold of 1000 ms
+            if (SystemClock.elapsedRealtime() - lastClickTime < 100){
+                return@setOnClickListener
+            }
+            lastClickTime = SystemClock.elapsedRealtime().toInt()
             temporaryArray = songName
             var count = 0
-            for ((index, i) in temporaryArray.withIndex()) {
+            for ((index, _) in temporaryArray.withIndex()) {
                 if (index % 2 != 0) {
                     songName[count] = temporaryArray[index]
                     count++
                 }
             }
-            for ((index, i) in temporaryArray.withIndex()) {
+            for ((index, _) in temporaryArray.withIndex()) {
                 if (index % 2 == 0) {
                     songName[count] = temporaryArray[index]
                     count++
@@ -122,15 +133,6 @@ class MainActivity : AppCompatActivity() {
             }
             val myListAdapter = MyListAdapter(this, songName, songImage)
             songView.adapter = myListAdapter
-        }
-    }
-
-    @RequiresApi(Build.VERSION_CODES.P)
-    override fun onStart() {
-        super.onStart()
-        // checking for permissions and if permission not granted asking for permission
-        if (hasNoPermission()) {
-            requestPermission()
         }
     }
 
@@ -188,7 +190,7 @@ class MainActivity : AppCompatActivity() {
     private fun updateList() {
         val sl: List<ModelWithImage> = databaseHandler.displaySongs()
         songName = Array(sl.size){"null"}
-        songImage = Array<Any>(sl.size){""}
+        songImage = Array(sl.size){""}
         for ((index, i) in sl.withIndex()) {
             songName[index] = i.name
                 .replace("%20", " ")

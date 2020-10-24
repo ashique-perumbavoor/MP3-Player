@@ -6,11 +6,8 @@ import android.graphics.BitmapFactory
 import android.media.MediaPlayer
 import android.media.RingtoneManager
 import android.net.Uri
-import android.os.Build
+import android.os.*
 import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import android.os.Handler
-import android.os.Message
 import android.provider.Settings
 import android.widget.PopupMenu
 import android.widget.SeekBar
@@ -32,6 +29,9 @@ import kotlinx.android.synthetic.main.activity_music_playing.previousButton
 import kotlinx.android.synthetic.main.activity_music_playing.progressBar
 import kotlinx.android.synthetic.main.activity_music_playing.remainingTimeLabel
 import kotlinx.android.synthetic.main.activity_music_playing.song_name
+import java.util.concurrent.Executor
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 @Suppress("DEPRECATION")
 class MusicPlayingActivity : AppCompatActivity() {
@@ -42,6 +42,8 @@ class MusicPlayingActivity : AppCompatActivity() {
     private val databaseHandler = DatabaseHandler(this)
     private lateinit var songName: String
     private lateinit var iName: String
+    private var lastClickTime = 0
+    private val executor = Executors.newCachedThreadPool()
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,6 +78,11 @@ class MusicPlayingActivity : AppCompatActivity() {
 
         // Next button to play the next song
         nextButton.setOnClickListener {
+            // mis-clicking prevention, using threshold of 1000 ms
+            if (SystemClock.elapsedRealtime() - lastClickTime < 100){
+                return@setOnClickListener
+            }
+            lastClickTime = SystemClock.elapsedRealtime().toInt()
             mp.pause()
             val nextSongID: Int = songID + 1
             songID++
@@ -108,6 +115,11 @@ class MusicPlayingActivity : AppCompatActivity() {
 
         // Previous button to play the previous song
         previousButton.setOnClickListener {
+            // mis-clicking prevention, using threshold of 1000 ms
+            if (SystemClock.elapsedRealtime() - lastClickTime < 100){
+                return@setOnClickListener
+            }
+            lastClickTime = SystemClock.elapsedRealtime().toInt()
             mp.pause()
             val nextSongID: Int = songID - 1
             songID--
@@ -190,8 +202,10 @@ class MusicPlayingActivity : AppCompatActivity() {
         iName = song_name.text.toString()
         val imageArray = databaseHandler.getImage(iName)
         if (imageArray != null) {
-            val bmp = BitmapFactory.decodeByteArray(imageArray, 0, imageArray.size)
-            songLogo.setImageBitmap(bmp)
+            executor.execute {
+                val bmp = BitmapFactory.decodeByteArray(imageArray, 0, imageArray.size)
+                songLogo.setImageBitmap(bmp)
+            }
         }
     }
 
